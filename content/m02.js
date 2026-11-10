@@ -47,7 +47,7 @@ When you open an app, your **profile** (age, location, interests, what you've se
 
 A simple prediction rule might look like this:
 
-> IF a customer suddenly buys unscented lotion AND vitamins AND cotton balls THEN predict "pregnant"
+> IF a customer suddenly buys moving boxes AND packing tape AND a new shower curtain THEN predict "moving soon"
 
 Recommendation feeds work the same way, comparing what you do with what millions of similar people do.
 
