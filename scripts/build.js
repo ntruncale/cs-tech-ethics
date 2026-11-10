@@ -151,6 +151,10 @@ fs.mkdirSync(path.join(DOCS, "modules"), { recursive: true });
 fs.mkdirSync(path.join(ROOT, "build"), { recursive: true });
 const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600..800&family=Source+Sans+3:wght@400..700&display=swap">';
 const pageName = (m) => `${m.slug}.html`;
+// Each link to a shared file carries a short fingerprint of its contents (?v=…), so browsers load a fresh copy
+// whenever the file changes instead of reusing an old one from their cache.
+const fingerprint = (text) => crypto.createHash("sha256").update(text).digest("hex").slice(0, 10);
+const ver = (rel) => rel + "?v=" + fingerprint(fs.readFileSync(path.join(DOCS, rel)));
 function encode(code) { return Buffer.from(code.split("").reverse().join(""), "utf8").toString("base64"); }
 function unitOf(m) { return units[m.unit - 1]; }
 const locks = [];
@@ -184,13 +188,13 @@ modules.forEach((m, i) => {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${Text.esc(title)}</title>
 ${FONTS}
-<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="${ver("assets/course.css")}">
 </head>
 <body>
 <div id="app"><noscript><p style="padding:24px">This lesson needs JavaScript. Please turn it on in Safari settings.</p></noscript></div>
-<script src="assets/course.js"></script>
-<script src="assets/lock.js"></script>
-<script src="modules/${key}.js"></script>
+<script src="${ver("assets/course.js")}"></script>
+<script src="${ver("assets/lock.js")}"></script>
+<script src="${ver("modules/" + key + ".js")}"></script>
 </body>
 </html>
 `);
@@ -214,7 +218,7 @@ fs.writeFileSync(path.join(DOCS, "index.html"), `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${Text.SETTINGS.course}</title>
 ${FONTS}
-<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="${ver("assets/course.css")}">
 <style>
 /* Layout: one column listing the units in order; each module is a row with its progress on this iPad. */
 .hero { display: grid; gap: 14px; }
@@ -273,8 +277,8 @@ ${locks.length ? `  <form class="lockbox" id="unlock-form" autocomplete="off">
   <aside class="helpbox">${Text.SETTINGS.help}</aside>
   <footer><span>Progress and unlock codes are saved in this iPad's browser.</span></footer>
 </main>
-<script src="assets/course.js"></script>
-<script src="assets/lock.js"></script>
+<script src="${ver("assets/course.js")}"></script>
+<script src="${ver("assets/lock.js")}"></script>
 <script>
 // Locked modules show a lock until this iPad has their unlock code.
 var LOCKS = ${JSON.stringify(locks)};
