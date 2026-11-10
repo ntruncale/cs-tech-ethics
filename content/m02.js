@@ -6,15 +6,17 @@ module.exports = {
   recap: "Last time you learned that metadata can reveal private things, and that your footprint has an active part (what you share) and a passive part (what's collected about you).",
   standards: { csta: ["3A-IC-24", "3A-IC-29"] },
   context: {
-    title: "The coupons that knew",
-    place: "Minneapolis, Minnesota · 2012",
-    text: `In 2012, a *New York Times Magazine* article called "How Companies Learn Your Secrets" described how the store **Target** studied its customers' shopping.
+    title: "The quiz that reached 87 million people",
+    place: "Cambridge, England, and Facebook · 2014–2018",
+    text: `In 2014, a university researcher named **Aleksandr Kogan** built a free Facebook app called **"thisisyourdigitallife."** It was a **personality quiz**. About **270,000 people** were paid a few dollars each to take it, and they clicked "allow" to let the app see their Facebook profiles.
 
-Target gave each shopper an ID number linked to their credit card, email and purchases. A statistician there looked at the shopping of customers who had signed up for a baby registry, and found about **25 products** whose pattern could predict a pregnancy, and even roughly estimate the due date. Customers who suddenly bought **unscented lotion**, certain **vitamin supplements** and **large bags of cotton balls** were often pregnant. Target used a "pregnancy prediction score" to send those customers coupons for baby items.
+But Facebook's rules at the time let apps collect data about users' **friends** too: their likes, birthdays, hometowns and more. So the app quietly gathered information on up to **87 million people**, almost all of whom had **never taken the quiz** or heard of it.
 
-The article told the story of a father near Minneapolis who walked into a Target, angry that his teenage daughter was being mailed coupons for cribs and baby clothes. A few days later, he called back to apologize: his daughter was pregnant, and the store's computer had figured it out before he knew.
+The data went to a political consulting company called **Cambridge Analytica**. It combined the likes and quiz answers to **infer** people's personalities, then used those profiles to decide which political ads to show them. Facebook's rules said app makers couldn't pass data along like that, but no one stopped it.
 
-She had never told Target anything. The algorithm **inferred** it.`
+In **March 2018**, a former employee, **Christopher Wylie**, told reporters what had happened. Facebook's founder had to testify before Congress, Cambridge Analytica shut down, and in 2019 the Federal Trade Commission fined Facebook **$5 billion**, at the time the largest privacy penalty in U.S. history.
+
+Millions of people's data was collected and used because a **friend** took a quiz.`
   },
   learn: [
     {
@@ -49,7 +51,7 @@ A simple prediction rule might look like this:
 
 > IF a customer suddenly buys moving boxes AND packing tape AND a new shower curtain THEN predict "moving soon"
 
-Recommendation feeds work the same way, comparing what you do with what millions of similar people do.
+Researchers have shown how powerful this is. A 2013 study of about 58,000 volunteers found that just their Facebook **likes** could predict their age, gender, personality and political views. (One odd finding: liking **curly fries** was a small sign of high intelligence.) Recommendation feeds work the same way, comparing what you do with what millions of similar people do.
 
 Inferences can be **wrong** (maybe you were buying for someone else). They can be **sensitive**: health, money, religion, relationships. And you usually **can't see or correct** them.`
     }
@@ -115,7 +117,7 @@ Inferences can be **wrong** (maybe you were buying for someone else). They can b
         "Ads chosen for you based on data about you are called [targeted] ads.",
         "A company that buys, combines and sells profiles of people is a data [broker].",
         "A conclusion an algorithm draws about you from patterns is an [inference].",
-        "Target's algorithm predicted pregnancy from about [25|twenty-five] products.",
+        "The personality quiz app collected data on up to [87|eighty-seven] million Facebook users.",
         "Advertisers bid to show you an ad in a real-time [auction]."
       ]
     }
@@ -136,7 +138,7 @@ Write **at least 5 sentences** describing the **data rules** you'd want for a ho
     ]
   },
   reflect: {
-    q: "The Target algorithm learned something deeply personal about a teenager before her own family knew. Should companies be allowed to make inferences like that? Where would you draw the line, and why?",
+    q: "Most of the 87 million people never took the quiz. Their data was collected because a friend clicked \"allow.\" Should one person be able to share data about their friends? Where would you draw the line, and why?",
     placeholder: "I think companies should…"
   },
   further: {
@@ -151,8 +153,8 @@ Write **at least 5 sentences** describing the **data rules** you'd want for a ho
     snags: [
       ["Task 3", "Puts \"the highest bidder wins\" before the bidding", "Can someone win before anyone has bid?"],
       ["Task 4", "Counts C3 as correct", "C3 is an athlete. Did the rule predict \"athlete\" for C3? (C3 doesn't buy protein bars.)"],
-      ["Context", "Asks whether the Target story is true", "The article is real and the method is well documented. Some details of the father anecdote have been questioned since, which is worth discussing as a lesson in checking sources."]
+      ["Context", "Wants to argue about the election", "Keep the focus on how the data was collected and used, not on any candidate or party. The privacy problem is the same whoever buys the ads."]
     ],
-    factcheck: "Charles Duhigg, 'How Companies Learn Your Secrets,' New York Times Magazine, Feb. 16, 2012; Target statistician Andrew Pole; about 25 products; 'pregnancy prediction' score; Minneapolis-area father anecdote (some later reporting questioned the anecdote's details). Real-time bidding happens in milliseconds. McDonald & Cranor, 'The Cost of Reading Privacy Policies' (2008): about 201 hours/year, about 76 eight-hour workdays. Chrome changed its third-party cookie plans several times in 2024–2025; check the current status before teaching."
+    factcheck: "Cambridge Analytica: Aleksandr Kogan's app 'thisisyourdigitallife' (2014); about 270,000 users paid to take the quiz; Facebook's then-current API let apps access friends' data; Facebook later estimated up to 87 million people affected. Reported March 17, 2018 (The Guardian/Observer, New York Times; whistleblower Christopher Wylie). Mark Zuckerberg testified before Congress April 10–11, 2018; Cambridge Analytica shut down May 2018; FTC $5 billion penalty announced July 24, 2019. Kosinski, Stillwell & Graepel, 'Private traits and attributes are predictable from digital records of human behavior,' PNAS, 2013 (58,000 volunteers; 'curly fries'). Real-time bidding happens in milliseconds. McDonald & Cranor, 'The Cost of Reading Privacy Policies' (2008): about 201 hours/year, about 76 eight-hour workdays. Chrome changed its third-party cookie plans several times in 2024–2025; check the current status before teaching."
   }
 };

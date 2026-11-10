@@ -9,7 +9,7 @@ A self-paced computer science unit for 9th graders on **data, privacy and fairne
 | # | Module | Context story |
 |---|---|---|
 | 1 | **Data and Your Digital Footprint**: data, binary, metadata, active and passive footprints | The Strava heatmap that revealed secret military bases (2018) |
-| 2 | **How Data Is Collected and Used**: cookies, trackers, data brokers, ad auctions, inference | Target's pregnancy-prediction algorithm (2012) |
+| 2 | **How Data Is Collected and Used**: cookies, trackers, data brokers, ad auctions, inference | The Cambridge Analytica quiz that collected data on 87 million people (2018) |
 | 3 | **Protecting Your Data**: passphrases, two-factor login, phishing, the Caesar cipher and encryption | The 17-year-old who hacked Twitter with a phone call (2020) |
 | 4 | **Data Bias**: training data, sampling/historical/proxy bias, auditing an algorithm | Robert Williams's wrongful arrest by facial recognition (2020) |
 | 5 | **Rights, Laws and Society**: the Fourth Amendment, FERPA, HIPAA, COPPA, state laws, GDPR, safety versus privacy | *Riley v. California*: "get a warrant" (2014) |
