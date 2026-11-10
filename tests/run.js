@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* Browser test for every module: works through each activity using the module's own answers,
    tries a wrong answer and an accent-mark slip, checks the completion code unlocks and survives a reload,
+   that a locked module refuses a wrong unlock code and opens with the right one (and the index unlock box works),
    that every play button has an audio file, that there are no script errors, and that the page
    doesn't scroll sideways on a phone. Screenshots go to tests/.shots/.
 
@@ -174,7 +175,16 @@ async function solveTask(p, t, vary, log) {
     p.on("console", (msg) => { if (msg.type() === "error" && !/ERR_FILE_NOT_FOUND|net::ERR_FAILED|fonts/.test(msg.text())) errs.push(msg.text()); });
     await p.route("https://fonts.**", (r) => r.abort());
     await p.goto("file://" + path.join(ROOT, "docs", course.pages[mi]));
-    await p.waitForSelector("#check-card");
+    // Locked modules: a wrong code is refused; the right one (typed loosely) opens the module.
+    const unlock = course.checks[key] && course.checks[key].unlock;
+    if (unlock) {
+      await p.waitForSelector("#lockbox");
+      if (await p.locator("#check-card").count()) log.push("locked module shows content before unlocking");
+      await p.fill("#unlock-code", "WRONG-0000"); await p.click("#lockbox button");
+      await p.waitForSelector("#unlock-msg.bad", { timeout: 15000 }).catch(() => log.push("wrong unlock code not refused"));
+      await p.fill("#unlock-code", unlock.toLowerCase().replace("-", " ")); await p.click("#lockbox button");
+    }
+    await p.waitForSelector("#check-card", { timeout: 15000 });
     const vary = await p.evaluate(() => (Course.state.extra.vary || {}));
 
     // Every play button on the page must have a clip in both voices.
@@ -221,6 +231,33 @@ async function solveTask(p, t, vary, log) {
     await ctx.close();
     if (log.length) { failures++; console.log(`FAIL ${key} ${m.slug}\n  - ` + log.join("\n  - ")); }
     else console.log(`PASS ${key} ${m.slug} (${code})`);
+  }
+  // Index page: every locked module shows a lock; a wrong code is refused; a right code unlocks only its module.
+  if (!only.length) {
+    const log = [];
+    const lockedMods = course.modules.filter((m) => course.checks["m" + String(m.num).padStart(2, "0")].unlock);
+    const ctx = await b.newContext({ viewport: { width: 820, height: 1180 } });
+    const p = await ctx.newPage();
+    const errs = [];
+    p.on("pageerror", (e) => errs.push(e.message));
+    await p.route("https://fonts.**", (r) => r.abort());
+    await p.goto("file://" + path.join(ROOT, "docs/index.html"));
+    if (await p.locator(".unit li.locked").count() !== lockedMods.length) log.push(`index shows ${await p.locator(".unit li.locked").count()} locked modules, expected ${lockedMods.length}`);
+    if (lockedMods.length) {
+      await p.fill("#unlock-code", "WRONG-0000"); await p.click("#unlock-form button");
+      await p.waitForSelector("#unlock-msg.bad", { timeout: 15000 }).catch(() => log.push("index: wrong code not refused"));
+      const m = lockedMods[Math.min(2, lockedMods.length - 1)], key = "m" + String(m.num).padStart(2, "0");
+      await p.fill("#unlock-code", course.checks[key].unlock); await p.click("#unlock-form button");
+      await p.waitForSelector("#unlock-msg.ok", { timeout: 30000 }).catch(() => log.push("index: right code not accepted"));
+      if (await p.locator(".unit li.locked").count() !== lockedMods.length - 1) log.push("index: unlocking didn't unlock exactly one module");
+      await p.screenshot({ path: path.join(SHOTS, "index-light.png"), fullPage: true });
+      await p.locator("#unlock-msg a").click();
+      await p.waitForSelector("#check-card", { timeout: 15000 }).catch(() => log.push("index: unlocked module didn't open without a code"));
+    }
+    if (errs.length) log.push("script errors: " + errs.join(" | "));
+    await ctx.close();
+    if (log.length) { failures++; console.log("FAIL index\n  - " + log.join("\n  - ")); }
+    else console.log("PASS index (locks and unlock codes)");
   }
   await b.close();
   process.exit(failures ? 1 : 0);

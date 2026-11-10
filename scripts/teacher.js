@@ -131,6 +131,7 @@ modules.forEach((m, i) => {
   out.push(`# M${m.num} ${Text.plain(m.title)}: Teacher answer key`, "");
   out.push(`**${md(m.subtitle)}** · Unit ${m.unit}: ${units[m.unit - 1].title} · about ${m.minutes || 40} minutes`, "");
   out.push(`**Student page:** ${SITE}${pages[i]}`, "");
+  if (c.unlock) out.push(`**Unlock code** (give it to students when it's time to start): \`${c.unlock}\``, "");
   out.push(`**Completion code:** \`${c.code}\` · **Blackbaud assessment:** ${assessment(m)}`, "");
   out.push(`**To finish:** ${required(m).length} activities + the Build writing. The optional self-check and Go Further challenge don't count.`, "");
   if (m.standards) out.push(`**Standards (CSTA K–12 CS, Level 3A):** ${m.standards.csta.map((c) => `${c} (${CSTA[c]})`).join("; ")}`, "");
@@ -202,7 +203,7 @@ The right answers are spread across A, B, C and D (${(() => { const n = [0, 0, 0
 
 /* ---------- overview, checklist, blueprint ---------- */
 const COURSE = Text.SETTINGS.course;
-const rowsOverview = modules.map((m, i) => `| ${m.num} | ${m.unit} | ${Text.plain(m.title)} | [${pages[i]}](${SITE}${pages[i]}) | \`${checks[key(m)].code}\` | ${assessment(m)} | ${required(m).length + 1} |`);
+const rowsOverview = modules.map((m, i) => `| ${m.num} | ${m.unit} | ${Text.plain(m.title)} | [${pages[i]}](${SITE}${pages[i]}) | ${checks[key(m)].unlock ? "`" + checks[key(m)].unlock + "`" : "open"} | \`${checks[key(m)].code}\` | ${assessment(m)} | ${required(m).length + 1} |`);
 fs.writeFileSync(path.join(OUT, "course-overview.md"), `# ${COURSE}: Course Overview for the Teacher
 
 All ${modules.length} modules at a glance, with what you need to set up each Blackbaud assessment. Each module's answer key is in \`answer-keys/\` and its Blackbaud quiz in \`blackbaud/\`, named by module (for example \`answer-keys/m03.md\`, \`blackbaud/m03-check.md\`).
@@ -212,11 +213,20 @@ Each module's link is the site address followed by its page name. For example, M
 
 **Scoring for every module:** completion code 5 pts + 5 quiz questions at 1 pt each = 10 pts. **Pass = 9 or 10.** Two essay questions (the Build writing and the reflection) are required but worth 0 points.
 
-| # | Unit | Module | Page | Completion code | Blackbaud assessment name | Items to finish |
-|---|---|---|---|---|---|---|
+| # | Unit | Module | Page | Unlock code | Completion code | Blackbaud assessment name | Items to finish |
+|---|---|---|---|---|---|---|---|
 ${rowsOverview.join("\n")}
 
 "Items to finish" counts the required activities plus the Build writing.
+
+## Unlock codes
+
+Every module is **locked** until a student enters its **unlock code**, which you give out when it's time to start that module (say it, write it on the board, or post it in the Blackbaud topic). Students enter it in the "Unlock a module" box on the home page, or on the module's own page. Each iPad remembers a code once it works. Codes aren't case-sensitive, and spaces and dashes don't matter. \`unlock-codes.md\` is a one-page sheet of them.
+
+- **How it works:** each module is published *encrypted* with its unlock code. Without the code, the lesson, activities and completion code aren't in the page at all, not even in the page source.
+- **What it can't stop:** a student who has a code can share it with a friend. Give codes out in class, when you want everyone to start.
+- **Changing a code** (for example, for a new class next year): edit \`unlock\` in \`teacher-src/checks.js\`, rebuild, and push. iPads that used the old code are asked for the new one.
+- **Leaving a module open:** delete its \`unlock\` line and rebuild.
 
 ## Suggested calendar (about 3 weeks)
 
@@ -226,7 +236,7 @@ Each module takes about 40 minutes, so one module fits one class period. Modules
 |---|---|
 | Week 1 | M1 Data and Your Digital Footprint · M2 How Data Is Collected and Used · M3 Protecting Your Data |
 | Week 2 | M4 Data Bias · M5 Rights, Laws and Society · M6 Privacy Rights |
-| Week 3, days 1–2 (or 3) | Class viewing of *Fantastic Four: First Steps* (about 2 hours). Students read M7 Steps 1–2 first and take notes with \`film/viewing-guide.md\` |
+| Week 3, days 1–2 (or 3) | Class viewing of *Fantastic Four: First Steps* (about 2 hours). Give out the M7 unlock code; students read M7 Steps 1–2 first and take notes with \`film/viewing-guide.md\` |
 | Week 3, day 3 | Discussion (see \`film/teacher-film-guide.md\`), then M7 Steps 3–6 |
 | Week 3, day 4 | Flex: catch-up and retakes |
 
@@ -262,7 +272,7 @@ Every answer key ends with a "Fact check" note listing the claims and sources to
 - **Private files:** completion codes and Blackbaud quizzes are in \`teacher-src/\`, and this \`teacher/\` folder is generated from them. Neither belongs in the public repository.
 `);
 
-const checklistRows = modules.map((m, i) => `| M${m.num} ${Text.plain(m.title)} | [${pages[i]}](${SITE}${pages[i]}) | \`${checks[key(m)].code}\` | ☐ | ☐ | ☐ | ☐ | ☐ |`);
+const checklistRows = modules.map((m, i) => `| M${m.num} ${Text.plain(m.title)} | [${pages[i]}](${SITE}${pages[i]}) | ${checks[key(m)].unlock ? "`" + checks[key(m)].unlock + "`" : "open"} | \`${checks[key(m)].code}\` | ☐ | ☐ | ☐ | ☐ | ☐ |`);
 fs.writeFileSync(path.join(OUT, "blackbaud-setup-checklist.md"), `# Blackbaud Setup Checklist
 
 For the teacher and the Blackbaud administrator. It follows the same steps as the CS, Health and Spanish courses. With only ${modules.length} modules, plan on about **45 minutes** with question import (about 2 hours by hand).
@@ -282,7 +292,7 @@ Menu names differ a little between Blackbaud versions, so some labels below may 
 
 - [ ] Allow \`ntruncale.github.io\` (the lesson pages)
 - [ ] Allow \`fonts.googleapis.com\` and \`fonts.gstatic.com\` (fonts; pages still work without them)
-- [ ] Test on one student iPad: open ${SITE}${pages[0]} and finish one activity.
+- [ ] Test on one student iPad: open ${SITE}, enter the M1 unlock code, and finish one activity.
 
 ## Part 3: Decide the settings (once, for every assessment)
 
@@ -295,14 +305,16 @@ Menu names differ a little between Blackbaud versions, so some labels below may 
 - [ ] Topic **M1 ${Text.plain(modules[0].title)}** with a one-line instruction and the link ${SITE}${pages[0]}
 - [ ] Assessment **${assessment(modules[0])}**: import \`blackbaud-import/csv/m01.csv\` (or ask Claude to reformat it to Blackbaud's template).
 - [ ] Check: code question 5 pts; 5 multiple-choice at 1 pt; essays B and C required at 0 pts; total 10.
-- [ ] **Test as the student account**, including a wrong code (which should not pass).
+- [ ] **Test as the student account**, including a wrong completion code (which should not pass).
 
 ## Part 5: All ${modules.length} modules
 
-For each module: ① topic with link, ② assessment imported, ③ answers and points checked, ④ publish date set, ⑤ link tested as the student account.
+For each module: ① topic with link, ② assessment imported, ③ answers and points checked, ④ publish date set, ⑤ link tested as the student account (enter the unlock code first).
 
-| Module | Page | Code | ① | ② | ③ | ④ | ⑤ |
-|---|---|---|---|---|---|---|---|
+Don't put the unlock code in the topic until you want students to start; you can add it to the topic text that day, or just say it in class.
+
+| Module | Page | Unlock | Completion | ① | ② | ③ | ④ | ⑤ |
+|---|---|---|---|---|---|---|---|---|
 ${checklistRows.join("\n")}
 
 ## Part 6: Before the film
@@ -360,5 +372,16 @@ ${scope.join("\n")}
 - Whether the modules are pass/fail like the other self-paced courses, or graded in the CS gradebook.
 - Whether to run the optional Socratic seminar after the film (see the film guide).
 - Hosting: the site is on GitHub Pages under a personal account; it should eventually belong to the school.
+`);
+const unlockRows = modules.filter((m) => checks[key(m)].unlock).map((m) => `| M${m.num} | ${Text.plain(m.title)} | **\`${checks[key(m)].unlock}\`** | ☐ |`);
+fs.writeFileSync(path.join(OUT, "unlock-codes.md"), `# ${COURSE}: Unlock Codes
+
+Give each code to students when it's time to start that module. Students enter it in the **Unlock a module** box at ${SITE} (or on the module's page). Codes aren't case-sensitive, and spaces and dashes don't matter.
+
+| Module | Title | Unlock code | Given out |
+|---|---|---|---|
+${unlockRows.join("\n")}
+
+Keep this sheet private: anyone with a code can open that module.
 `);
 console.log(`wrote teacher/: ${modules.length} answer keys, ${modules.length} Blackbaud checks, ${csvRows.length} quiz rows, overview, checklist, blueprint`);

@@ -381,3 +381,10 @@ ol.steplist li.empty, .steplist .empty { list-style: none; margin-left: -1.6rem;
 .label-card .r.thick { border-top-width: 4px; }
 
 blockquote { margin: 0; padding: 10px 16px; border-left: 4px solid var(--gold); background: var(--surface-2); border-radius: 0 8px 8px 0; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.5; }
+/* Unlock codes (docs/assets/lock.js): the box on the index page and on a locked module page. */
+.lockbox { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 12px; padding: 16px 18px; display: grid; gap: 10px; }
+.lockbox h2 { font-size: 1.15rem; }
+.lockbox p { margin: 0; }
+.lockrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.lockrow input { flex: 1 1 12rem; max-width: 20rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.lockback { font-size: var(--step-0); }

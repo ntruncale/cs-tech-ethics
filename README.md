@@ -16,6 +16,8 @@ A self-paced computer science unit for 9th graders on **data, privacy and fairne
 | 6 | **Privacy Rights**: the right to be let alone, privacy in context, "nothing to hide," consent, sharenting, the right to be forgotten | Warren and Brandeis's "The Right to Privacy" (1890) |
 | 7 | **Film Study: *Fantastic Four: First Steps***: six privacy lenses, their world versus ours | A family the whole world watches |
 
+**Unlock codes:** every module is locked until students enter the code the teacher gives out when it's time to start. Locked modules are published encrypted with their code (`docs/assets/lock.js` decrypts them in the browser), so the content isn't readable without it. The codes are kept in the private `teacher-src/checks.js`; delete a module's `unlock` line there and rebuild to leave it open.
+
 Each module ends with a 🦸 **film note** that sets up one lens for the film. Modules align with the CSTA K–12 Computer Science Standards (3A-IC-24, 25, 29, 30; 3A-NI-05, 06, 07).
 
 ## Folders
@@ -27,7 +29,7 @@ Each module ends with a 🦸 **film note** that sets up one lens for the film. M
 | `film/` | Teacher film guide (pause points, discussion, seminar), printable student viewing guide, family letter | Yes |
 | `scripts/` | `build.js` (content → site), `teacher.js` + `export_xlsx.py` (teacher files) | Yes |
 | `tests/` | A browser test that completes every activity in every module | Yes |
-| `teacher-src/` | **Private:** completion codes and Blackbaud quizzes | **No** (git-ignored) |
+| `teacher-src/` | **Private:** unlock codes, completion codes and Blackbaud quizzes | **No** (git-ignored) |
 | `teacher/` | **Private, generated:** answer keys, Blackbaud setups and import files, overview, checklist, blueprint | **No** (git-ignored) |
 
 ## Making changes
