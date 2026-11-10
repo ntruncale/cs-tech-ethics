@@ -1,21 +1,22 @@
 /* CS Tech Ethics: shared styles for every module (the same layout as Health 9).
    Layout: one reading column under a sticky step bar; every module uses the same seven steps so students always know where they are.
-   Colors: deep space navy for the bar, a bright cosmic blue for actions, a flare-orange stripe, green for "done." */
+   Colors: the Fantastic Four's light blue for the step bar and page, deep navy text (like the black trim on their suits),
+   a stronger blue for links and buttons so white button text stays readable, a flame-orange highlight, green for "done." */
 :root {
-  --paper: #F4F6FB;
+  --paper: #E8F4FC;
   --surface: #FFFFFF;
-  --surface-2: #E8ECF6;
-  --ink: #141A2E;
-  --muted: #4D5670;
-  --line: #D3D9E8;
-  --accent: #2747B8;
+  --surface-2: #D6ECFA;
+  --ink: #0B1E33;
+  --muted: #3D566E;
+  --line: #B7D8EE;
+  --accent: #1565B0;
   --on-accent: #FFFFFF;
-  --accent-soft: #E1E7FA;
+  --accent-soft: #D3EAFA;
   --gold: #F2A93B;
   --on-gold: #2B1A04;
   --gold-soft: #FDEBCF;
-  --tile: #2747B8;
-  --tile-soft: #E1E7FA;
+  --tile: #1565B0;
+  --tile-soft: #D3EAFA;
   --on-tile: #FFFFFF;
   --hint-bg: #FDEBCF;
   --hint-ink: #4A2F06;
@@ -23,9 +24,10 @@
   --ok-soft: #DFF2E5;
   --bad: #B0284B;
   --bad-soft: #FBE3EA;
-  --bar: #121B45;
-  --bar-ink: #FFFFFF;
-  --bar-muted: #C9D3F2;
+  --bar: #7CC6F2;
+  --bar-ink: #0B1E33;
+  --bar-muted: #1E3A56;
+  --bar-line: rgba(11, 30, 51, 0.35);
   --font-body: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Bitter", Georgia, "Times New Roman", serif;
   --step-0: 0.875rem;
@@ -37,24 +39,24 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0E1222; --surface: #161B30; --surface-2: #1E2540; --ink: #E9EDF8; --muted: #A7B0CB; --line: #2E3654;
-    --accent: #8FA8FF; --on-accent: #0B1230; --accent-soft: #1E2A55;
+    --paper: #0A1622; --surface: #11243A; --surface-2: #17304B; --ink: #E8F3FB; --muted: #A6BED3; --line: #27425E;
+    --accent: #8DD0F7; --on-accent: #0A1622; --accent-soft: #163552;
     --gold: #F5B65C; --on-gold: #241603; --gold-soft: #3D2C10;
-    --tile: #8FA8FF; --tile-soft: #1E2A55; --on-tile: #0B1230;
+    --tile: #8DD0F7; --tile-soft: #163552; --on-tile: #0A1622;
     --hint-bg: #3D2C10; --hint-ink: #FCE3B8;
     --ok: #7FD8A0; --ok-soft: #153523; --bad: #FF9BB3; --bad-soft: #43192A;
-    --bar: #0B1030; --bar-ink: #FFFFFF; --bar-muted: #B9C4EA;
+    --bar: #1F5F8E; --bar-ink: #FFFFFF; --bar-muted: #D3ECFB; --bar-line: rgba(255, 255, 255, 0.4);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0E1222; --surface: #161B30; --surface-2: #1E2540; --ink: #E9EDF8; --muted: #A7B0CB; --line: #2E3654;
-  --accent: #8FA8FF; --on-accent: #0B1230; --accent-soft: #1E2A55;
+  --paper: #0A1622; --surface: #11243A; --surface-2: #17304B; --ink: #E8F3FB; --muted: #A6BED3; --line: #27425E;
+  --accent: #8DD0F7; --on-accent: #0A1622; --accent-soft: #163552;
   --gold: #F5B65C; --on-gold: #241603; --gold-soft: #3D2C10;
-  --tile: #8FA8FF; --tile-soft: #1E2A55; --on-tile: #0B1230;
+  --tile: #8DD0F7; --tile-soft: #163552; --on-tile: #0A1622;
   --hint-bg: #3D2C10; --hint-ink: #FCE3B8;
   --ok: #7FD8A0; --ok-soft: #153523; --bad: #FF9BB3; --bad-soft: #43192A;
-  --bar: #0B1030; --bar-ink: #FFFFFF; --bar-muted: #B9C4EA;
+  --bar: #1F5F8E; --bar-ink: #FFFFFF; --bar-muted: #D3ECFB; --bar-line: rgba(255, 255, 255, 0.4);
   color-scheme: dark;
 }
 
@@ -79,7 +81,7 @@ img { max-width: 100%; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--tile); outline-offset: 2px; border-radius: 4px; }
 
-/* Sticky step bar, striped like the flag: red, gold, red */
+/* Sticky step bar in Fantastic Four light blue, with a flame-orange line along the bottom */
 .bar {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
   background: var(--bar); color: var(--bar-ink);
@@ -97,7 +99,7 @@ img { max-width: 100%; }
 .steps::-webkit-scrollbar { display: none; }
 .steps a {
   flex: none; text-decoration: none; color: var(--bar-muted); font-size: var(--step-0);
-  padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.35); white-space: nowrap;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--bar-line); white-space: nowrap;
 }
 .steps a.done { color: var(--on-gold); border-color: var(--gold); background: var(--gold); }
 .meter { flex: none; font-size: var(--step-0); color: var(--bar-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -110,8 +112,8 @@ img { max-width: 100%; }
 .wrap { padding-block: 26px 64px; display: grid; gap: 40px; }
 header.intro { display: grid; gap: 12px; }
 /* The stripe under each title is the letter H in binary (01001000), from Module 1. */
-.tilestrip { height: 22px; border-radius: 4px; background-color: var(--accent-soft);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='22' viewBox='0 0 120 22'%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='none' stroke='%23F2A93B' stroke-width='2'/%3E%3Crect x='20' y='6' width='10' height='10' rx='2' fill='%23F2A93B'/%3E%3Crect x='35' y='7' width='8' height='8' rx='2' fill='none' stroke='%23F2A93B' stroke-width='2'/%3E%3Crect x='49' y='7' width='8' height='8' rx='2' fill='none' stroke='%23F2A93B' stroke-width='2'/%3E%3Crect x='62' y='6' width='10' height='10' rx='2' fill='%23F2A93B'/%3E%3Crect x='77' y='7' width='8' height='8' rx='2' fill='none' stroke='%23F2A93B' stroke-width='2'/%3E%3Crect x='91' y='7' width='8' height='8' rx='2' fill='none' stroke='%23F2A93B' stroke-width='2'/%3E%3Crect x='105' y='7' width='8' height='8' rx='2' fill='none' stroke='%23F2A93B' stroke-width='2'/%3E%3C/svg%3E");
+.tilestrip { height: 22px; border-radius: 4px; background-color: var(--bar);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='22' viewBox='0 0 120 22'%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='none' stroke='%230B1E33' stroke-width='2'/%3E%3Crect x='20' y='6' width='10' height='10' rx='2' fill='%230B1E33'/%3E%3Crect x='35' y='7' width='8' height='8' rx='2' fill='none' stroke='%230B1E33' stroke-width='2'/%3E%3Crect x='49' y='7' width='8' height='8' rx='2' fill='none' stroke='%230B1E33' stroke-width='2'/%3E%3Crect x='62' y='6' width='10' height='10' rx='2' fill='%230B1E33'/%3E%3Crect x='77' y='7' width='8' height='8' rx='2' fill='none' stroke='%230B1E33' stroke-width='2'/%3E%3Crect x='91' y='7' width='8' height='8' rx='2' fill='none' stroke='%230B1E33' stroke-width='2'/%3E%3Crect x='105' y='7' width='8' height='8' rx='2' fill='none' stroke='%230B1E33' stroke-width='2'/%3E%3C/svg%3E");
   background-size: 120px 22px; }
 .eyebrow { font-size: var(--step-0); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .subtitle { font-size: var(--step-2); font-weight: 600; color: var(--tile); }
