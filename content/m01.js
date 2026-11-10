@@ -1,0 +1,160 @@
+module.exports = {
+  num: 1, unit: 1, slug: "m01-digital-footprint", minutes: 40,
+  title: "Data and Your Digital Footprint",
+  subtitle: "What data is, what metadata reveals, and the trail you leave behind",
+  lede: "Every tap, search, step and photo turns into data. Some of it you share on purpose. Much of it is collected without you noticing. Together it makes your digital footprint, and it can last a very long time.",
+  recap: "This is the first module. By the end of the course you'll watch *Fantastic Four: First Steps* and look at the privacy questions it raises, so watch for the 🦸 film notes along the way.",
+  standards: { csta: ["3A-IC-24", "3A-IC-29"] },
+  context: {
+    title: "The map that gave away secret bases",
+    place: "Canberra, Australia · January 2018",
+    text: `**Strava** is a fitness app. Runners and cyclists use it to record their routes with their phone's GPS. In November 2017, Strava published a **Global Heatmap**: a picture of more than a billion activities from users around the world, glowing brightest where the most people exercised.
+
+In January 2018, **Nathan Ruser**, a 20-year-old university student studying international security, was looking at the map. In big cities the map glowed everywhere. But in the deserts of Syria and Afghanistan, where almost no one used fitness apps, he noticed small, bright shapes: loops and lines in remote places. They were **military bases**. Soldiers wearing fitness trackers had been jogging laps around them, and their routes revealed the bases' outlines, patrol paths and even where people lived.
+
+No one posted "here is a secret base." Each soldier just went for a run. But when everyone's location data was combined, it revealed something nobody meant to share. Militaries around the world changed their rules for fitness trackers, and Strava made its privacy settings easier to find.`
+  },
+  learn: [
+    {
+      title: "Everything becomes data",
+      text: `**Data** is information a computer can store and process. Computers store all of it, including text, photos, songs, your location and your heart rate, as **binary**: 1s and 0s. For example, the letter **H** is stored as the number 72, which is **01001000** in binary.
+
+Once something is just numbers, it can be **copied perfectly**, **stored cheaply**, **sent instantly** and **searched automatically**. A paper diary has one copy. A digital diary can exist on your phone, a cloud backup and a company's servers at the same time.`,
+      after: "That's why you can't really \"take back\" a photo after you send it: every copy is perfect, and copies are free."
+    },
+    {
+      title: "Metadata: data about data",
+      text: `**Metadata** is information *about* a file or message: when it was made, where, by whom and on what device. Think of an envelope. The letter inside is the **content**; the outside of the envelope (to, from, postmark, date) is the **metadata**.`,
+      table: {
+        head: ["Thing", "Its metadata can include"],
+        rows: [
+          ["A photo", "Date, time, phone model and often **GPS location** (called **EXIF** data)"],
+          ["A text message", "Who you texted, when, how often, and roughly where you were"],
+          ["A run on a fitness app", "Your route, start point, time and speed"],
+          ["A document", "The author's name, when it was created and edited"]
+        ]
+      },
+      after: "Metadata can reveal as much as content. If your phone shows you at a clinic every Tuesday, or texting one person at midnight every night, no one has to read a single message to learn something private. **Patterns reveal secrets.**"
+    },
+    {
+      title: "Active and passive footprints",
+      text: `Your **digital footprint** is the trail of data you leave behind.
+
+- Your **active footprint** is what you share **on purpose**: posts, comments, profiles, reviews.
+- Your **passive footprint** is collected **without you actively sharing it**: location history, what you click, how long you watch a video, which Wi-Fi networks your phone joins.
+
+Footprints are hard to erase. Deleted posts can survive in **screenshots**, **reposts**, **backups** and **archives**. Colleges, employers, coaches and scholarship committees may look. In 2017, Harvard withdrew admission offers to at least ten incoming students after offensive messages they posted in a "private" group chat were shared.
+
+Footprints can also be **positive**: a portfolio of your art, a coding project, a volunteer award, a school news story about your team.`
+    }
+  ],
+  tasks: [
+    {
+      id: "t1", type: "match", title: "Key words",
+      pairs: [
+        ["data", "information a computer can store and process"],
+        ["binary", "the 1s and 0s computers use to store everything"],
+        ["metadata", "information about a file, like when and where it was made"],
+        ["EXIF data", "metadata saved inside a photo, sometimes including GPS location"],
+        ["digital footprint", "the trail of data you leave behind online"]
+      ]
+    },
+    {
+      id: "t2", type: "sort", title: "Active or passive?",
+      intro: "Did the person share it on purpose (active), or was it collected automatically (passive)?",
+      cats: ["Active footprint", "Passive footprint"],
+      items: [
+        ["Posting a photo of your lunch", 0], ["Writing a product review", 0], ["Commenting on a friend's video", 0], ["Creating a gaming profile with a username", 0],
+        ["Your phone recording the places you go", 1], ["A streaming app tracking how long you watched a show", 1], ["Your phone joining a store's Wi-Fi automatically", 1], ["A website noting which links you clicked", 1]
+      ]
+    },
+    {
+      id: "t3", type: "read", title: "Metadata detective",
+      intro: "You can't read any of Jordan's messages. You only have the metadata.",
+      passage: `**One week of metadata for Jordan, a fictional student:**
+
+- Every weekday at 7:10 a.m., Jordan's phone leaves **412 Maple St.** and arrives at **Lincoln High School** by 7:45.
+- Monday to Wednesday, 3:00–5:00 p.m.: **Riverside Aquatic Center**. Saturday, 6:30 a.m.–noon: **Riverside Aquatic Center (regional meet)**.
+- Wednesday, 11:00–11:50 a.m.: **Westside Clinic, Allergy and Asthma office**. A 3-minute call to the clinic at 10:20.
+- Thursday, 4:00–4:40 p.m.: **FreshMart Grocery, manager's office**, after a 4-minute call to FreshMart.
+- Texts to a contact saved as **"Sam 🏊"** almost every night, 30–50 messages each. Friday evening, 7:00–11:30 p.m.: **88 Oak Ave.**`,
+      questions: [
+        { q: "What is Jordan's after-school activity most likely to be?", choices: [["Swimming", true, "Hours at the aquatic center, a Saturday meet and a friend saved with a swimmer emoji."], ["Basketball", false], ["Working at a grocery store", false], ["Nothing; there isn't enough data", false]] },
+        { q: "What private information does the metadata suggest?", choices: [["Jordan had a medical appointment and may be applying for a job", true, "The clinic visit and the grocery manager's office give it away, without a single message."], ["Jordan's password", false], ["Jordan's grades", false], ["Nothing private at all", false]] },
+        { q: "Where does Sam probably live?", choices: [["88 Oak Ave.", true, "Jordan spends Friday night there and texts Sam every night."], ["412 Maple St.", false], ["Lincoln High School", false], ["Riverside Aquatic Center", false]] },
+        { q: "What's the big lesson of this activity?", choices: [["Patterns in metadata can reveal private things, even without the content", true], ["Metadata is useless without the messages", false], ["Only hackers can see metadata", false], ["Metadata is always deleted after a day", false]] }
+      ]
+    },
+    {
+      id: "t4", type: "sort", title: "Helps or hurts your future?",
+      intro: "Imagine a college admissions officer searches for a student named Alex. How would each thing they find affect Alex?",
+      cats: ["Likely helps", "Could hurt"],
+      items: [
+        ["A school news story about Alex's robotics award", 0], ["A coding project Alex shared publicly", 0], ["A volunteer list from the animal shelter", 0], ["Videos of Alex's guitar covers", 0],
+        ["An old post calling teachers \"clueless\"", 1], ["A rude argument with a stranger in a comment thread", 1], ["A cruel joke Alex sent to a \"private\" group chat that got screenshotted", 1], ["A public fitness map showing Alex's house as the start of every run", 1]
+      ]
+    },
+    {
+      id: "t5", type: "quiz", title: "What would you do?",
+      questions: [
+        { q: "Your fitness app shares your running routes publicly by default. Every run starts at your front door. What's the best fix?", choices: [["Make activities private and hide the start and end of your routes", true, "Many apps have a privacy zone setting that hides the area around your home."], ["Run a different route every day", false], ["Nothing; no one looks at running routes", false], ["Delete one old run", false]] },
+        { q: "A friend says, \"I delete my posts after a day, so I don't have a digital footprint.\" What's the best reply?", choices: [["Posts can still survive in screenshots, reposts, backups and archives", true], ["You're right, deleted means gone", false], ["Only photos count as a footprint", false], ["Footprints only matter for adults", false]] },
+        { q: "Which is the best example of building a positive digital footprint?", choices: [["Sharing a portfolio of your art or coding projects", true], ["Posting your class schedule publicly", false], ["Arguing in comment sections", false], ["Sharing your live location", false]] }
+      ]
+    },
+    {
+      id: "t6", type: "cloze", title: "Key ideas",
+      intro: "Fill in the missing word.",
+      items: [
+        "Data about data, like when and where a photo was taken, is called [metadata].",
+        "Computers store everything as 1s and 0s, called [binary].",
+        "Data you share on purpose is your [active] footprint.",
+        "Data collected without you actively sharing it is your [passive] footprint.",
+        "Strava's heatmap revealed military bases by combining many people's [location|GPS] data."
+      ]
+    },
+    {
+      id: "s1", type: "selfcheck", title: "My footprint check",
+      intro: "Think about your own accounts and devices.",
+      items: ["I know which of my accounts are public", "I know which apps can see my location", "I'd be comfortable if a college saw my public posts", "I think before I post or send", "I've turned off location data on my photos, or I know how"],
+      short: ["Know what's public", "Know location apps", "OK if a college saw", "Think before posting", "Photo location off"],
+      scale: ["not at all", "very much"],
+      tip: "Pick one account this week and check its privacy settings: who can see your posts, and whether your location is shared."
+    }
+  ],
+  build: {
+    heading: "My footprint map",
+    prompt: `Write a **description of your digital footprint** in **at least 5 sentences**. You don't need to name specific accounts or share anything private. Name **one active** and **one passive** example of data about you, explain one thing **metadata** could reveal, name one place data can **last** even after you delete it, and describe one **positive** thing you could add to your footprint.`,
+    model: `One active part of my footprint is the comments I leave on gaming videos. One passive part is the location history my phone records when I walk to school. Metadata from my photos could reveal what time I get home every day. Even if I delete a post, a friend could have a screenshot of it. I want to add something positive to my footprint, like a portfolio of the websites I build in CS class.`,
+    placeholder: "One active part of my footprint is…",
+    reqs: [
+      { t: "At least 5 sentences", sentences: 5 },
+      { t: "An active example", any: ["active", "on purpose", "I post", "I share", "I comment", "I upload"] },
+      { t: "A passive example", any: ["passive", "automatically", "without me", "tracks", "tracking", "records", "location history", "collected"] },
+      { t: "Something metadata could reveal", any: ["metadata", "EXIF", "timestamp", "time stamp", "location data", "GPS"] },
+      { t: "Where data can last", any: ["screenshot", "screenshots", "backup", "backups", "archive", "archives", "repost", "reposts", "copy", "copies", "cached", "forever"] },
+      { t: "A positive addition", any: ["positive", "portfolio", "project", "projects", "volunteer", "award", "proud"] }
+    ]
+  },
+  reflect: {
+    q: "Ignatius asked people to pause at the end of each day and look back honestly at how they spent it. If you looked back on your digital footprint from the last month, what would you be proud of, and what would you want to change? (You don't need to share anything private.)",
+    placeholder: "Looking back, I'm proud that…"
+  },
+  further: {
+    id: "x1", type: "quiz", title: "Challenge: footprints at scale",
+    questions: [
+      { q: "Why was the Strava heatmap more revealing than any one soldier's run?", choices: [["Combining many people's data revealed patterns no single person meant to share", true], ["One soldier posted the base's location", false], ["Strava hacked the military", false], ["The map showed people's names", false]] },
+      { q: "Most social media apps remove GPS data from photos when you upload them. When might the location still be shared?", choices: [["When you send the original photo file by email, AirDrop or some messaging apps", true], ["Never; GPS is always removed", false], ["Only if the photo is black and white", false], ["Only on weekends", false]] }
+    ]
+  },
+  culture: "🦸 **Film note:** In *Fantastic Four: First Steps*, the Fantastic Four are the most famous family on their planet. Their footprint is huge, and most of it was created by **other people**: reporters, TV hosts, fans. As you go through this course, think about this: *if you were the most famous person in the world, what would you still want to keep private? Could you?*",
+  teacher: {
+    snags: [
+      ["Task 2", "Puts \"joining Wi-Fi automatically\" under active", "Did you choose to share anything, or did your phone do it for you?"],
+      ["Task 3", "Says there isn't enough data", "Look at where Jordan goes, how often and with whom. What patterns do you see?"],
+      ["Self-check", "Wants to show you their phone's location settings", "Fine to help, but don't collect or record what's on their device."],
+      ["Build", "Names real accounts or private details", "Remind them to describe categories (\"my gaming account\") rather than usernames."]
+    ],
+    factcheck: "Strava Global Heatmap published November 2017; Nathan Ruser, then a 20-year-old Australian National University student, posted about it on January 27, 2018 (BBC, The Guardian, Washington Post, Jan. 2018). The heatmap drew on about 1 billion activities. Harvard rescinded offers to at least ten admitted students for the class of 2021 over offensive memes in a Facebook group chat (The Harvard Crimson, June 5, 2017). ASCII 'H' = 72 = 01001000."
+  }
+};

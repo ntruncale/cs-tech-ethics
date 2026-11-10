@@ -1,0 +1,8 @@
+# Private: completion codes, Blackbaud quizzes and answer keys. Never commit these to this public repository.
+teacher/
+teacher-src/
+# Generated
+build/
+tests/.shots/
+node_modules/
+*.zip
