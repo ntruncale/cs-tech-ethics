@@ -3,6 +3,7 @@
 
    teacher/course-overview.md       every module: page, completion code, mySPS name, calendar
    teacher/mysps-setup-checklist.md
+   teacher/mysps-topic-text.md      ready-to-paste text for each module's mySPS topic
    teacher/answer-keys/mNN.md       every activity's answers, common snags, fact-check notes
    teacher/mysps/mNN-check.md   the mySPS assessment for each module
    teacher/mysps-import/        all quizzes as CSV (one file and one per module); scripts/export_xlsx.py adds a spreadsheet
@@ -373,6 +374,50 @@ ${scope.join("\n")}
 - Whether to run the optional Socratic seminar after the film (see the film guide).
 - Hosting: the site is on GitHub Pages under a personal account; it should eventually belong to the school.
 `);
+/* ---------- ready-to-paste mySPS topic text ---------- */
+const topicText = modules.map((m, i) => {
+  const film = m.num === 7;
+  return `## M${m.num} · ${Text.plain(m.title)}
+
+**Topic title:** M${m.num} · ${Text.plain(m.title)}
+
+**Topic description (paste this):**
+
+> **${Text.plain(m.title)}**: ${md(m.subtitle)}.
+>
+> 🔒 This module is locked. Your teacher will give you the unlock code ${film ? "before we watch the film" : "in class when it's time to start"}.
+>
+> 1. Open the module on your iPad: ${SITE}${pages[i]}
+> 2. Enter the unlock code. You only need to do this once.
+${film ? "> 3. **Before the film:** read Steps 1 and 2 (about 10 minutes). Take notes on the viewing guide while we watch.\n> 4. **After the film:** finish Steps 3 to 5. Use your viewing-guide notes for your Build writing.\n> 5." : "> 3. Work through all 7 steps (about " + (m.minutes || 40) + " minutes). The activities check themselves; tap **Show a hint** if you're stuck.\n> 4."} At the end, write down your **completion code**. Tap **Copy my writing** to copy your Build writing ("${md(m.build.heading)}"), and **Copy my reflection** for your reflection.
+> ${film ? "6" : "5"}. Open the assessment **${assessment(m)}** and enter your completion code, answer the 5 questions, and paste your writing and reflection.
+>
+> **To pass:** the correct completion code and at least 4 of the 5 questions right.
+
+**Assessment name:** ${assessment(m)}
+`;
+});
+fs.writeFileSync(path.join(OUT, "mysps-topic-text.md"), `# ${COURSE}: Text for the mySPS Topics
+
+Ready-to-paste text for each module's topic in mySPS. Unlock codes are **not** in this text, so you can publish the topics ahead of time and give out each code in class (see \`unlock-codes.md\`).
+
+## Unit overview topic (optional)
+
+**Topic title:** ${COURSE}: Data, Privacy and Fairness
+
+**Topic description (paste this):**
+
+> Over the next few weeks you'll learn what your digital footprint is, how companies collect and use data, how to protect your accounts, how biased data can make unfair algorithms, which laws protect your privacy, and why privacy is a human right. Then we'll watch *Fantastic Four: First Steps* and use everything you've learned to analyze the privacy questions it raises.
+>
+> **How it works:** Each module is a web page you do on your iPad: ${SITE}
+> Modules are locked until your teacher gives you that module's unlock code. Each module ends with a completion code that you enter in that module's mySPS check, along with 5 questions and your writing.
+>
+> **Modules:** ${modules.map((m) => `M${m.num} ${Text.plain(m.title)}`).join(" · ")}
+
+---
+
+${topicText.join("\n---\n\n")}`);
+
 const unlockRows = modules.filter((m) => checks[key(m)].unlock).map((m) => `| M${m.num} | ${Text.plain(m.title)} | **\`${checks[key(m)].unlock}\`** | ☐ |`);
 fs.writeFileSync(path.join(OUT, "unlock-codes.md"), `# ${COURSE}: Unlock Codes
 
@@ -384,4 +429,4 @@ ${unlockRows.join("\n")}
 
 Keep this sheet private: anyone with a code can open that module.
 `);
-console.log(`wrote teacher/: ${modules.length} answer keys, ${modules.length} mySPS checks, ${csvRows.length} quiz rows, overview, checklist, blueprint`);
+console.log(`wrote teacher/: ${modules.length} answer keys, ${modules.length} mySPS checks, ${csvRows.length} quiz rows, topic text, overview, checklist, blueprint`);
