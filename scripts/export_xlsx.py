@@ -1,4 +1,4 @@
-"""Make teacher/blackbaud-import/all-quizzes.xlsx from the CSV files that scripts/teacher.js writes.
+"""Make teacher/mysps-import/all-quizzes.xlsx from the CSV files that scripts/teacher.js writes.
 
 One sheet with every question, then one sheet per module.
 Usage: python3 scripts/export_xlsx.py
@@ -10,7 +10,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-OUT = ROOT / "teacher" / "blackbaud-import"
+OUT = ROOT / "teacher" / "mysps-import"
 WIDTHS = [8, 34, 10, 16, 7, 9, 60, 26, 26, 26, 26, 10, 26, 34, 40]
 
 

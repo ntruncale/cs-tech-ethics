@@ -340,6 +340,7 @@
       speechSynthesis.speak(u);
     }
     function play(text, btn, opts) {
+      if (!SETTINGS.audio) return; // This course has no audio: nothing is ever spoken aloud.
       opts = opts || {};
       var same = btn && btn === playingBtn;
       stop();
@@ -1123,7 +1124,7 @@
       var s = shell(t, host, true);
       s.row.removeChild(s.check);
       var ans = bag(t.id);
-      s.body.appendChild(html("p", { "class": "goal" }, "🔒 Only you see this. Your answers stay on this iPad and aren't sent to Blackbaud or your teacher."));
+      s.body.appendChild(html("p", { "class": "goal" }, "🔒 Only you see this. Your answers stay on this iPad and aren't sent to mySPS or your teacher."));
       var chart = el("div", { "class": "selfchart", "aria-hidden": "true" });
       t.items.forEach(function (label, i) {
         var row = el("div", { "class": "sort-row" });
@@ -1228,7 +1229,7 @@
           lis[i].innerHTML = (st.ok ? "✓ " : "○ ") + inline(r.t) + (st.note ? ' <span class="goal">(' + esc(st.note) + ")</span>" : "");
         });
         count.textContent = (ta.value.match(/[\p{L}'’-]+/gu) || []).length + " words";
-        if (all && !state.done.build) { feedback(fb, true, "Your writing meets every requirement. You'll paste it into Blackbaud in Step 6."); markDone("build"); }
+        if (all && !state.done.build) { feedback(fb, true, "Your writing meets every requirement. You'll paste it into mySPS in Step 6."); markDone("build"); }
         else if (all) feedback(fb, true, "Every requirement met.");
         else fb.innerHTML = "";
       }
@@ -1327,7 +1328,7 @@
       if (M.subtitle) head.appendChild(html("p", { "class": "subtitle" }, inline(M.subtitle)));
       head.appendChild(html("p", { "class": "lede" }, inline(M.lede)));
       var req = M.tasks.filter(function (t) { return !t.optional && t.type !== "speak" && t.type !== "selfcheck"; }).length + 1;
-      head.appendChild(html("div", { "class": "facts" }, "<span><b>Time:</b> about " + (M.minutes || 40) + " minutes</span><span><b>To pass:</b> finish the " + req + " activities, then complete the Blackbaud check</span><span><b>Saves:</b> automatically on this iPad</span>"));
+      head.appendChild(html("div", { "class": "facts" }, "<span><b>Time:</b> about " + (M.minutes || 40) + " minutes</span><span><b>To pass:</b> finish the " + req + " activities, then complete the mySPS check</span><span><b>Saves:</b> automatically on this iPad</span>"));
       var vb = el("div", { "class": "voicebar" });
       vb.appendChild(el("span", null, "🔊 Voice:"));
       var segV = el("div", { "class": "seg", role: "group", "aria-label": "Voice" });
@@ -1393,7 +1394,7 @@
       var s5 = section("reflect");
       s5.appendChild(stepHead(5, "Reflect", "Reflection"));
       s5.appendChild(html("p", { "class": "reflect-q" }, inline(M.reflect.q)));
-      s5.appendChild(html("p", { "class": "goal" }, "Write 2 to 4 sentences. Your teacher will read this, so share only what you're comfortable sharing. You'll copy your answer into the Blackbaud check. Your draft saves on this iPad."));
+      s5.appendChild(html("p", { "class": "goal" }, "Write 2 to 4 sentences. Your teacher will read this, so share only what you're comfortable sharing. You'll copy your answer into the mySPS check. Your draft saves on this iPad."));
       var draft = el("textarea", { "class": "draft", id: "reflect-draft", placeholder: M.reflect.placeholder || "", "aria-label": "Your reflection" });
       draft.value = state.reflect || "";
       draft.addEventListener("input", function () { state.reflect = draft.value; save(); refresh(); });
@@ -1408,7 +1409,7 @@
 
       /* 6 check */
       var s6 = section("check");
-      s6.appendChild(stepHead(6, "Check in Blackbaud", "Evaluation"));
+      s6.appendChild(stepHead(6, "Check in mySPS", "Evaluation"));
       var cc = el("div", { "class": "check-card", id: "check-card" });
       var locked = el("div", { id: "check-locked" });
       locked.appendChild(html("p", null, "<b>Finish every activity to unlock your completion code.</b>"));
@@ -1417,7 +1418,7 @@
       var open = el("div", { id: "check-open", hidden: "" });
       open.appendChild(html("p", null, "<b>Nice work! All activities done. Your completion code is:</b>"));
       open.appendChild(el("div", { "class": "code-badge", id: "code-badge" }));
-      open.appendChild(html("p", null, "Now open Blackbaud and find the assessment <b>“M" + M.num + " Check: " + esc(Text.plain(M.title)) + ".”</b> It asks for:"));
+      open.appendChild(html("p", null, "Now open mySPS and find the assessment <b>“M" + M.num + " Check: " + esc(Text.plain(M.title)) + ".”</b> It asks for:"));
       open.appendChild(html("ol", { "class": "todo" }, "<li>Your completion code (above)</li><li>5 short quiz questions</li><li>Your writing from Step 4. Tap the button below, then paste it in.</li><li>Your reflection from Step 5</li>"));
       var cb = el("div", { "class": "row" });
       var copyB = el("button", { "class": "primary", type: "button" }, "Copy my writing");
@@ -1466,7 +1467,7 @@
         if (fallbackEl) { fallbackEl.focus(); if (fallbackEl.select) fallbackEl.select(); }
       }
       if (!String(text).trim()) { msgEl.textContent = "There's nothing to copy yet."; return; }
-      try { navigator.clipboard.writeText(text).then(function () { msgEl.textContent = "Copied. Paste it into Blackbaud."; }, fallback); }
+      try { navigator.clipboard.writeText(text).then(function () { msgEl.textContent = "Copied. Paste it into mySPS."; }, fallback); }
       catch (e) { fallback(); }
     }
 

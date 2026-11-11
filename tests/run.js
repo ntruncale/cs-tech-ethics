@@ -169,6 +169,12 @@ async function solveTask(p, t, vary, log) {
     const key = "m" + String(m.num).padStart(2, "0");
     const log = [];
     const ctx = await b.newContext({ viewport: { width: 820, height: 1180 } });
+    // Count any speech or audio playback: this course should never speak.
+    await ctx.addInitScript(() => {
+      window.__sounds = 0;
+      if (window.speechSynthesis) speechSynthesis.speak = function () { window.__sounds++; };
+      HTMLMediaElement.prototype.play = function () { window.__sounds++; return Promise.resolve(); };
+    });
     const p = await ctx.newPage();
     const errs = [];
     p.on("pageerror", (e) => errs.push(e.message));
@@ -198,6 +204,8 @@ async function solveTask(p, t, vary, log) {
       const done = await p.evaluate((id) => !!Course.state.done[id], t.id);
       if (!done) log.push(`task ${t.id} (${t.type}) not marked done`);
     }
+    const sounds = await p.evaluate(() => window.__sounds);
+    if (sounds) log.push(`${sounds} sounds played (speech or audio) while doing the activities`);
     // Build: the model writing must meet its own requirements.
     const model = (m.build.model || "").split(/\n+/).map((l) => Text.plain(l.replace(/\{\{(.+?)\}\}/g, (_, x) => x.split("|")[0]))).join("\n");
     await p.fill("#build-text", model);

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /* Write the teacher folder (private) from build/course.json. Run scripts/build.js first.
 
-   teacher/course-overview.md       every module: page, completion code, Blackbaud name, calendar
-   teacher/blackbaud-setup-checklist.md
+   teacher/course-overview.md       every module: page, completion code, mySPS name, calendar
+   teacher/mysps-setup-checklist.md
    teacher/answer-keys/mNN.md       every activity's answers, common snags, fact-check notes
-   teacher/blackbaud/mNN-check.md   the Blackbaud assessment for each module
-   teacher/blackbaud-import/        all quizzes as CSV (one file and one per module); scripts/export_xlsx.py adds a spreadsheet
+   teacher/mysps/mNN-check.md   the mySPS assessment for each module
+   teacher/mysps-import/        all quizzes as CSV (one file and one per module); scripts/export_xlsx.py adds a spreadsheet
 
    Usage: node scripts/build.js && node scripts/teacher.js && python3 scripts/export_xlsx.py */
 "use strict";
@@ -16,7 +16,7 @@ const Text = require(path.join(ROOT, "docs/assets/course.js"));
 const { units, modules, checks, pages } = JSON.parse(fs.readFileSync(path.join(ROOT, "build/course.json"), "utf8"));
 const OUT = path.join(ROOT, "teacher");
 const SITE = "https://ntruncale.github.io/cs-tech-ethics/";
-for (const d of ["", "answer-keys", "blackbaud", "blackbaud-import", "blackbaud-import/csv"]) fs.mkdirSync(path.join(OUT, d), { recursive: true });
+for (const d of ["", "answer-keys", "mysps", "mysps-import", "mysps-import/csv"]) fs.mkdirSync(path.join(OUT, d), { recursive: true });
 
 const key = (m) => "m" + String(m.num).padStart(2, "0");
 // Markup in module text → Markdown: {{shown|spoken}} → shown, ((clue)) → (clue), HTML tags dropped.
@@ -111,7 +111,7 @@ function taskKey(t) {
       lines.push("Each student sees the steps shuffled.");
       break;
     case "selfcheck":
-      lines.push("Optional and private: answers stay on the student's iPad and are never sent to Blackbaud or the teacher. Items: " + items.map((it) => md(it)).join(" · "));
+      lines.push("Optional and private: answers stay on the student's iPad and are never sent to mySPS or the teacher. Items: " + items.map((it) => md(it)).join(" · "));
       break;
     case "speak":
       lines.push("Optional; not checked. Students listen, record themselves and compare. " + items.map((it) => `*${Text.itemText(it)}*`).join(" · "));
@@ -132,7 +132,7 @@ modules.forEach((m, i) => {
   out.push(`**${md(m.subtitle)}** · Unit ${m.unit}: ${units[m.unit - 1].title} · about ${m.minutes || 40} minutes`, "");
   out.push(`**Student page:** ${SITE}${pages[i]}`, "");
   if (c.unlock) out.push(`**Unlock code** (give it to students when it's time to start): \`${c.unlock}\``, "");
-  out.push(`**Completion code:** \`${c.code}\` · **Blackbaud assessment:** ${assessment(m)}`, "");
+  out.push(`**Completion code:** \`${c.code}\` · **mySPS assessment:** ${assessment(m)}`, "");
   out.push(`**To finish:** ${required(m).length} activities + the Build writing. The optional self-check and Go Further challenge don't count.`, "");
   if (m.standards) out.push(`**Standards (CSTA K–12 CS, Level 3A):** ${m.standards.csta.map((c) => `${c} (${CSTA[c]})`).join("; ")}`, "");
   if (m.num === 7) out.push("**Film module.** Students read Steps 1–2 before the class viewing and complete Steps 3–6 afterward. See `film/teacher-film-guide.md` for the viewing plan, pause points and discussion questions.", "");
@@ -143,7 +143,7 @@ modules.forEach((m, i) => {
   });
   out.push(`## Build: ${md(m.build.heading)}`, "", md(m.build.prompt), "", "Requirements, checked automatically as the student types:", ...m.build.reqs.map((r) => "- " + reqText(r)), "");
   if (m.build.model) out.push("**Model shown to students:** " + m.build.model.split(/\n+/).map(md).filter(Boolean).join(" "), "");
-  out.push("The automatic check looks for the required words and patterns, not for perfect grammar. Skim the pasted writing in Blackbaud.", "");
+  out.push("The automatic check looks for the required words and patterns, not for perfect grammar. Skim the pasted writing in mySPS.", "");
   out.push("## Reflect", "", md(m.reflect.q), "");
   if (m.further && m.further.type) out.push(`## Go Further (optional): ${md(m.further.title)}`, "", taskKey(m.further), "");
   if (m.teacher && m.teacher.snags) {
@@ -155,18 +155,18 @@ modules.forEach((m, i) => {
   fs.writeFileSync(path.join(OUT, "answer-keys", k + ".md"), out.join("\n").replace(/\n{3,}/g, "\n\n"));
 });
 
-/* ---------- Blackbaud checks ---------- */
+/* ---------- mySPS checks ---------- */
 function codeVariants(code) { const lc = code.toLowerCase(); return [code, code.replace("-", ""), lc, lc.replace("-", "")]; }
 const csvRows = [];
 const COLUMNS = ["Module", "Assessment name", "Question #", "Question type", "Points", "Required", "Question text", "Choice A", "Choice B", "Choice C", "Choice D", "Correct choice", "Correct answer", "Accepted answers", "Note for the teacher"];
 modules.forEach((m) => {
   const k = key(m), c = checks[k], name = assessment(m);
-  const out = [`# ${name} (Blackbaud assessment setup)`, "",
+  const out = [`# ${name} (mySPS assessment setup)`, "",
     "Same scoring as every module: completion code 5 pts, quiz questions 1 pt each, two required essay questions at 0 pts. Total 10, **pass = 9 or 10**.", "",
-    "Suggested settings: no time limit; shuffle answer choices if Blackbaud offers it; allow retakes but don't show correct answers (or show answers and allow only 1–2 attempts). See `blackbaud-setup-checklist.md`, Part 3.", "", "---", "",
+    "Suggested settings: no time limit; shuffle answer choices if mySPS offers it; allow retakes but don't show correct answers (or show answers and allow only 1–2 attempts). See `mysps-setup-checklist.md`, Part 3.", "", "---", "",
     "## Question A: Completion code (fill-in-the-blank / short answer, 5 pts)", "",
     `> Enter the completion code shown at the end of the module "${Text.plain(m.title)}."`, "",
-    `**Answer:** \`${c.code}\`. If Blackbaud allows extra accepted answers, also add ${codeVariants(c.code).slice(1).map((v) => "`" + v + "`").join(", ")}.`, "",
+    `**Answer:** \`${c.code}\`. If mySPS allows extra accepted answers, also add ${codeVariants(c.code).slice(1).map((v) => "`" + v + "`").join(", ")}.`, "",
     "## Quiz (multiple choice, 1 pt each)", ""];
   const rows = [];
   rows.push([`M${m.num}`, name, "A", "Fill in the blank", 5, "Yes", `Enter the completion code shown at the end of the module "${Text.plain(m.title)}."`, "", "", "", "", "", c.code, codeVariants(c.code).join(" | "), ""]);
@@ -181,21 +181,21 @@ modules.forEach((m) => {
     "## Question C: Reflection (essay / long answer, 0 pts, required)", "", `> ${md(m.reflect.q)} (2–4 sentences)`, "");
   rows.push([`M${m.num}`, name, "B", "Essay", 0, "Yes", `Paste your writing from Step 4, "${md(m.build.heading)}."`, "", "", "", "", "", "", "", "Required; 0 points. The module checks the requirements automatically."]);
   rows.push([`M${m.num}`, name, "C", "Essay", 0, "Yes", md(m.reflect.q) + " (2–4 sentences)", "", "", "", "", "", "", "", "Required; 0 points."]);
-  fs.writeFileSync(path.join(OUT, "blackbaud", k + "-check.md"), out.join("\n"));
-  writeCsv(path.join(OUT, "blackbaud-import/csv", k + ".csv"), rows);
+  fs.writeFileSync(path.join(OUT, "mysps", k + "-check.md"), out.join("\n"));
+  writeCsv(path.join(OUT, "mysps-import/csv", k + ".csv"), rows);
   rows.forEach((r) => csvRows.push(r));
 });
 function csvCell(v) { v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
 function writeCsv(file, rows) { fs.writeFileSync(file, "﻿" + [COLUMNS].concat(rows).map((r) => r.map(csvCell).join(",")).join("\n") + "\n"); }
-writeCsv(path.join(OUT, "blackbaud-import/all-quizzes.csv"), csvRows);
-fs.writeFileSync(path.join(OUT, "blackbaud-import/README.md"), `# Blackbaud import files
+writeCsv(path.join(OUT, "mysps-import/all-quizzes.csv"), csvRows);
+fs.writeFileSync(path.join(OUT, "mysps-import/README.md"), `# mySPS import files
 
-- \`all-quizzes.csv\` (and \`all-quizzes.xlsx\`, with a sheet per module): every Blackbaud question for all ${modules.length} modules.
+- \`all-quizzes.csv\` (and \`all-quizzes.xlsx\`, with a sheet per module): every mySPS question for all ${modules.length} modules.
 - \`csv/mNN.csv\`: the same questions, one file per module.
 
 Each module has 8 rows: Question A (completion code, 5 pts), five multiple-choice questions (1 pt each), and two required essays (B and C, 0 pts).
 
-These use the same columns as the Computer Science course's files. When you have Blackbaud's own import template, ask Claude to reformat all ${modules.length} to match it.
+These use the same columns as the Computer Science course's files. When you have mySPS's own import template, ask Claude to reformat all ${modules.length} to match it.
 
 The right answers are spread across A, B, C and D (${(() => { const n = [0, 0, 0, 0]; Object.values(checks).forEach((c) => c.quiz.forEach((q) => n[q.answer]++)); return n.map((x, i) => LETTERS[i] + ": " + x).join(", "); })()}).
 `);
@@ -206,14 +206,14 @@ const COURSE = Text.SETTINGS.course;
 const rowsOverview = modules.map((m, i) => `| ${m.num} | ${m.unit} | ${Text.plain(m.title)} | [${pages[i]}](${SITE}${pages[i]}) | ${checks[key(m)].unlock ? "`" + checks[key(m)].unlock + "`" : "open"} | \`${checks[key(m)].code}\` | ${assessment(m)} | ${required(m).length + 1} |`);
 fs.writeFileSync(path.join(OUT, "course-overview.md"), `# ${COURSE}: Course Overview for the Teacher
 
-All ${modules.length} modules at a glance, with what you need to set up each Blackbaud assessment. Each module's answer key is in \`answer-keys/\` and its Blackbaud quiz in \`blackbaud/\`, named by module (for example \`answer-keys/m03.md\`, \`blackbaud/m03-check.md\`).
+All ${modules.length} modules at a glance, with what you need to set up each mySPS assessment. Each module's answer key is in \`answer-keys/\` and its mySPS quiz in \`mysps/\`, named by module (for example \`answer-keys/m03.md\`, \`mysps/m03-check.md\`).
 
 **Student site:** ${SITE}
 Each module's link is the site address followed by its page name. For example, M1 is ${SITE}${pages[0]}
 
 **Scoring for every module:** completion code 5 pts + 5 quiz questions at 1 pt each = 10 pts. **Pass = 9 or 10.** Two essay questions (the Build writing and the reflection) are required but worth 0 points.
 
-| # | Unit | Module | Page | Unlock code | Completion code | Blackbaud assessment name | Items to finish |
+| # | Unit | Module | Page | Unlock code | Completion code | mySPS assessment name | Items to finish |
 |---|---|---|---|---|---|---|---|
 ${rowsOverview.join("\n")}
 
@@ -221,7 +221,7 @@ ${rowsOverview.join("\n")}
 
 ## Unlock codes
 
-Every module is **locked** until a student enters its **unlock code**, which you give out when it's time to start that module (say it, write it on the board, or post it in the Blackbaud topic). Students enter it in the "Unlock a module" box on the home page, or on the module's own page. Each iPad remembers a code once it works. Codes aren't case-sensitive, and spaces and dashes don't matter. \`unlock-codes.md\` is a one-page sheet of them.
+Every module is **locked** until a student enters its **unlock code**, which you give out when it's time to start that module (say it, write it on the board, or post it in the mySPS topic). Students enter it in the "Unlock a module" box on the home page, or on the module's own page. Each iPad remembers a code once it works. Codes aren't case-sensitive, and spaces and dashes don't matter. \`unlock-codes.md\` is a one-page sheet of them.
 
 - **How it works:** each module is published *encrypted* with its unlock code. Without the code, the lesson, activities and completion code aren't in the page at all, not even in the page source.
 - **What it can't stop:** a student who has a code can share it with a friend. Give codes out in class, when you want everyone to start.
@@ -244,9 +244,9 @@ If the class meets less often, spread M1–M6 over more weeks. The film works be
 
 ## How the course works for students
 
-- **Seven steps in every module**, following the Ignatian Pedagogical Paradigm like the CS Sophomore Year, Health 9 and Español 9 courses: 1 Context (a true story), 2 Learn (three short ideas), 3 Practice (6 self-checking activities), 4 Build (a short piece of writing with automatic requirement checks), 5 Reflect, 6 Check (completion code and Blackbaud), 7 Go Further (optional).
+- **Seven steps in every module**, following the Ignatian Pedagogical Paradigm like the CS Sophomore Year, Health 9 and Español 9 courses: 1 Context (a true story), 2 Learn (three short ideas), 3 Practice (6 self-checking activities), 4 Build (a short piece of writing with automatic requirement checks), 5 Reflect, 6 Check (completion code and mySPS), 7 Go Further (optional).
 - **Activity types:** matching, sorting, putting steps in order, readings with questions, scenario quizzes, fill-in-the-blank (including decoding a Caesar cipher in M3), and an optional **private self-check** in M1 and M3.
-- **Private self-checks** stay on the student's iPad. They are never sent to Blackbaud or the teacher.
+- **Private self-checks** stay on the student's iPad. They are never sent to mySPS or the teacher.
 - **Every module ends with a 🦸 film note** that sets up one of the six "lenses" students use in Module 7.
 - **No personal data needed.** Activities use fictional people (Jordan, Alex, SnackStream customers). Build prompts tell students to describe categories, not real usernames or passwords.
 - **Help on every page:** a box tells students what to do if something online is pressuring or threatening them (save evidence, tell a trusted adult, NCMEC's Take It Down), plus 988 and 911.
@@ -269,21 +269,21 @@ Every answer key ends with a "Fact check" note listing the claims and sources to
 
 - **Lesson content** is in \`content/mNN.js\` (one file per module). \`scripts/build.js\` turns it into the student site in \`docs/\`.
 - **The look** (deep navy, cosmic blue and a flare-orange stripe) is set at the top of \`docs/assets/course.css\`; the shared behavior, including the help box text, is in \`docs/assets/course.js\` (the same engine as Health 9). The Scranton Prep seal is reused from the CS course.
-- **Private files:** completion codes and Blackbaud quizzes are in \`teacher-src/\`, and this \`teacher/\` folder is generated from them. Neither belongs in the public repository.
+- **Private files:** completion codes and mySPS quizzes are in \`teacher-src/\`, and this \`teacher/\` folder is generated from them. Neither belongs in the public repository.
 `);
 
 const checklistRows = modules.map((m, i) => `| M${m.num} ${Text.plain(m.title)} | [${pages[i]}](${SITE}${pages[i]}) | ${checks[key(m)].unlock ? "`" + checks[key(m)].unlock + "`" : "open"} | \`${checks[key(m)].code}\` | ☐ | ☐ | ☐ | ☐ | ☐ |`);
-fs.writeFileSync(path.join(OUT, "blackbaud-setup-checklist.md"), `# Blackbaud Setup Checklist
+fs.writeFileSync(path.join(OUT, "mysps-setup-checklist.md"), `# mySPS Setup Checklist
 
-For the teacher and the Blackbaud administrator. It follows the same steps as the CS, Health and Spanish courses. With only ${modules.length} modules, plan on about **45 minutes** with question import (about 2 hours by hand).
+For the teacher and the mySPS administrator. It follows the same steps as the CS, Health and Spanish courses. With only ${modules.length} modules, plan on about **45 minutes** with question import (about 2 hours by hand).
 
-Menu names differ a little between Blackbaud versions, so some labels below may not match your screen exactly.
+Menu names differ a little between mySPS versions, so some labels below may not match your screen exactly.
 
 ---
 
 ## Part 1: Class and grading
 
-- [ ] Add the modules to your existing 9th-grade CS class in Blackbaud, or ask the administrator for a separate **${COURSE}** section.
+- [ ] Add the modules to your existing 9th-grade CS class in mySPS, or ask the administrator for a separate **${COURSE}** section.
 - [ ] Decide how the modules count: **Pass/Fail** per module (9–10 points = Pass), like the other self-paced courses, or as points in your gradebook.
 - [ ] Confirm topics can **link to an outside website**, and that **question import** is turned on.
 - [ ] Use a **test student account** to try everything.
@@ -297,13 +297,13 @@ Menu names differ a little between Blackbaud versions, so some labels below may 
 ## Part 3: Decide the settings (once, for every assessment)
 
 - [ ] **Retakes and answers.** Choose one, not both: allow retakes but don't show correct answers, **or** show answers and allow only 1–2 attempts.
-- [ ] **Shuffle answer choices**, if Blackbaud offers it.
+- [ ] **Shuffle answer choices**, if mySPS offers it.
 - [ ] **No time limit.**
 
 ## Part 4: Build and test M1 first
 
 - [ ] Topic **M1 ${Text.plain(modules[0].title)}** with a one-line instruction and the link ${SITE}${pages[0]}
-- [ ] Assessment **${assessment(modules[0])}**: import \`blackbaud-import/csv/m01.csv\` (or ask Claude to reformat it to Blackbaud's template).
+- [ ] Assessment **${assessment(modules[0])}**: import \`mysps-import/csv/m01.csv\` (or ask Claude to reformat it to mySPS's template).
 - [ ] Check: code question 5 pts; 5 multiple-choice at 1 pt; essays B and C required at 0 pts; total 10.
 - [ ] **Test as the student account**, including a wrong completion code (which should not pass).
 
@@ -328,7 +328,7 @@ ${checklistRows.join("\n")}
 const scope = modules.map((m) => `| ${m.num} | ${Text.plain(m.title)} | ${md(m.subtitle)} | ${m.standards.csta.join(", ")} | ${md(m.context.title)} |`);
 fs.writeFileSync(path.join(OUT, "blueprint.md"), `# ${COURSE}: Program Blueprint
 
-**Audience:** 9th-grade computer science · **Format:** ${modules.length - 1} self-paced modules on iPads, then a class viewing of *Fantastic Four: First Steps* (2025) and a film-study module · **Length:** about 3 weeks · **Records:** Blackbaud · **Built from:** the same engine and seven-step template as the Health 9, CS Sophomore Year and Español 9 courses
+**Audience:** 9th-grade computer science · **Format:** ${modules.length - 1} self-paced modules on iPads, then a class viewing of *Fantastic Four: First Steps* (2025) and a film-study module · **Length:** about 3 weeks · **Records:** mySPS · **Built from:** the same engine and seven-step template as the Health 9, CS Sophomore Year and Español 9 courses
 
 ## Goal
 
@@ -358,7 +358,7 @@ ${scope.join("\n")}
 | 3. Practice | Experience | 6 self-checking activities (plus an optional private self-check in M1 and M3) | 18 min |
 | 4. Build | Action | A short piece of writing: a footprint map, rules for a home robot, a security plan, a bias audit, a law, a bill of rights, a film review | 8 min |
 | 5. Reflect | Reflection | One prompt, written so students don't need to share private details | 3 min |
-| 6. Check | Evaluation | Blackbaud: completion code + 5 questions + writing + reflection | 4 min |
+| 6. Check | Evaluation | mySPS: completion code + 5 questions + writing + reflection | 4 min |
 | 7. Go Further | — | Optional challenge | — |
 
 **Pass rule:** correct completion code + at least 4/5 on the quiz.
@@ -384,4 +384,4 @@ ${unlockRows.join("\n")}
 
 Keep this sheet private: anyone with a code can open that module.
 `);
-console.log(`wrote teacher/: ${modules.length} answer keys, ${modules.length} Blackbaud checks, ${csvRows.length} quiz rows, overview, checklist, blueprint`);
+console.log(`wrote teacher/: ${modules.length} answer keys, ${modules.length} mySPS checks, ${csvRows.length} quiz rows, overview, checklist, blueprint`);

@@ -1,6 +1,6 @@
 # Family Letter Template: Film Viewing
 
-*Edit the bracketed parts, then send it home or post it in Blackbaud about a week before the viewing. Check first whether your school requires a signed permission form for PG-13 films.*
+*Edit the bracketed parts, then send it home or post it in mySPS about a week before the viewing. Check first whether your school requires a signed permission form for PG-13 films.*
 
 ---
 

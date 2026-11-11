@@ -3,7 +3,7 @@
 
    content/units.js     the units, in order
    content/mNN.js       one file per module (lesson content and practice activities)
-   teacher-src/checks.js  completion codes and Blackbaud quizzes (private; not in the public repo)
+   teacher-src/checks.js  completion codes and mySPS quizzes (private; not in the public repo)
 
    Writes:
    docs/index.html, docs/mNN-slug.html (one small page per module), docs/modules/mNN.js (module data),
@@ -107,7 +107,7 @@ function validate(m) {
   if (!c) bad(m, "no entry in teacher-src/checks.js");
   else {
     if (!/^[A-ZÑ]+-\d+$/.test(c.code)) bad(m, `completion code ${c.code} should look like NAME-1234`);
-    if (!c.quiz || c.quiz.length !== 5) bad(m, "Blackbaud quiz needs 5 questions");
+    if (!c.quiz || c.quiz.length !== 5) bad(m, "mySPS quiz needs 5 questions");
     if (c.unlock != null && !/^[A-Z]+-\d+$/.test(c.unlock)) bad(m, `unlock code ${c.unlock} should look like WORD-1234`);
     if (c.unlock && normCode(c.unlock) === normCode(c.code)) bad(m, "unlock code is the same as the completion code");
     (c.quiz || []).forEach((q, i) => { if (!q.choices || !q.choices[q.answer]) bad(m, `quiz q${i + 1}: answer index is wrong`); });
@@ -255,7 +255,7 @@ ${FONTS}
       </div>
     </div>
     <div class="tilestrip" aria-hidden="true"></div>
-    <p class="lede">A self-paced computer science unit for freshmen on data, privacy and fairness: ${modules.length - 1} modules, then a film study of <i>Fantastic Four: First Steps</i>. Open the module your teacher assigned in Blackbaud, work through every step, then complete the Blackbaud check.</p>
+    <p class="lede">A self-paced computer science unit for freshmen on data, privacy and fairness: ${modules.length - 1} modules, then a film study of <i>Fantastic Four: First Steps</i>. Open the module your teacher assigned in mySPS, work through every step, then complete the mySPS check.</p>
     <div class="how">
       <h2 style="font-size:1.1rem">How it works</h2>
       <ul>
@@ -263,7 +263,7 @@ ${FONTS}
         <li>Activities check themselves. If you're stuck, tap <b>Show a hint</b>.</li>
         <li>Some modules have a private <b>self-check</b>. Only you see your answers.</li>
         <li>Watch for the 🦸 <b>film notes</b>. Each module ends with a question to keep in mind when you watch the movie.</li>
-        <li>Finish every activity to get the <b>completion code</b> for the Blackbaud check.</li>
+        <li>Finish every activity to get the <b>completion code</b> for the mySPS check.</li>
       </ul>
     </div>
   </header>

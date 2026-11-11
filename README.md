@@ -1,6 +1,6 @@
 # CS Tech Ethics
 
-A self-paced computer science unit for 9th graders on **data, privacy and fairness**: **6 modules**, then a class viewing of ***Fantastic Four: First Steps*** (2025) and a **film-study module** that applies everything to the film's privacy questions. Students work on iPads in the browser and record progress through Blackbaud assessments, the same way as the *Health 9*, *Computer Science – Sophomore Year* and *Español 9* courses.
+A self-paced computer science unit for 9th graders on **data, privacy and fairness**: **6 modules**, then a class viewing of ***Fantastic Four: First Steps*** (2025) and a **film-study module** that applies everything to the film's privacy questions. Students work on iPads in the browser and record progress through mySPS assessments, the same way as the *Health 9*, *Computer Science – Sophomore Year* and *Español 9* courses.
 
 **Student site:** https://ntruncale.github.io/cs-tech-ethics/ (GitHub Pages, served from the `docs/` folder)
 
@@ -29,8 +29,8 @@ Each module ends with a 🦸 **film note** that sets up one lens for the film. M
 | `film/` | Teacher film guide (pause points, discussion, seminar), printable student viewing guide, family letter | Yes |
 | `scripts/` | `build.js` (content → site), `teacher.js` + `export_xlsx.py` (teacher files) | Yes |
 | `tests/` | A browser test that completes every activity in every module | Yes |
-| `teacher-src/` | **Private:** unlock codes, completion codes and Blackbaud quizzes | **No** (git-ignored) |
-| `teacher/` | **Private, generated:** answer keys, Blackbaud setups and import files, overview, checklist, blueprint | **No** (git-ignored) |
+| `teacher-src/` | **Private:** unlock codes, completion codes and mySPS quizzes | **No** (git-ignored) |
+| `teacher/` | **Private, generated:** answer keys, mySPS setups and import files, overview, checklist, blueprint | **No** (git-ignored) |
 
 ## Making changes
 
