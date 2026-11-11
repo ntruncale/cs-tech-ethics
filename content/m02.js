@@ -118,7 +118,7 @@ Inferences can be **wrong** (maybe you were buying for someone else). They can b
         "A company that buys, combines and sells profiles of people is a data [broker].",
         "A conclusion an algorithm draws about you from patterns is an [inference].",
         "The personality quiz app collected data on up to [87|eighty-seven] million Facebook users.",
-        "Advertisers bid to show you an ad in a real-time [auction]."
+        "When advertisers compete in an instant auction to show you an ad, it's called real-time [bidding|bid|bids|auction|auctioning]."
       ]
     }
   ],
