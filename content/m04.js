@@ -108,7 +108,7 @@ A computer's answer can *feel* objective. Remember Robert Williams: the software
         "Algorithms that learn patterns from examples use machine [learning].",
         "The examples an algorithm learns from are its [training] data.",
         "If the data is bad, the results are bad: garbage in, garbage [out].",
-        "An algorithm can be accurate overall and still fail one [group], so test each separately.",
+        "An algorithm can be accurate overall and still fail one [group|subgroup|demographic|population], so test each separately.",
         "Robert Williams was wrongfully arrested after a facial [recognition] match."
       ]
     }

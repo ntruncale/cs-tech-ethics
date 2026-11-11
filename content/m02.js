@@ -114,7 +114,7 @@ Inferences can be **wrong** (maybe you were buying for someone else). They can b
       id: "t6", type: "cloze", title: "Key ideas",
       intro: "Fill in the missing word.",
       items: [
-        "Ads chosen for you based on data about you are called [targeted] ads.",
+        "Ads chosen for you based on data about you are called [targeted|personalized|personalised] ads.",
         "A company that buys, combines and sells profiles of people is a data [broker].",
         "A conclusion an algorithm draws about you from patterns is an [inference].",
         "The personality quiz app collected data on up to [87|eighty-seven] million Facebook users.",

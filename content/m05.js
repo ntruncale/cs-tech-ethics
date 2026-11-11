@@ -113,7 +113,7 @@ The Court also noted that a phone can hold thousands of photos, months of locati
       items: [
         "In Riley v. California, the Supreme Court told police to get a [warrant].",
         "COPPA protects children under the age of [13|thirteen].",
-        "The Fourth Amendment limits the [government], not companies.",
+        "The Fourth Amendment limits the [government|state], not companies.",
         "Under the GDPR, companies can be fined up to [4|four] percent of their worldwide yearly revenue.",
         "Epic Games paid a penalty for collecting kids' data without their parents' [consent|permission]."
       ]

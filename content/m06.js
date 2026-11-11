@@ -106,7 +106,7 @@ Her friend Leo replies: *"Do you have curtains? Do you lock the bathroom door? W
       items: [
         "Warren and Brandeis called privacy \"the right to be let [alone].\"",
         "Agreeing freely, knowing what you're agreeing to, is called [consent].",
-        "Privacy is violated when information flows into the wrong [context].",
+        "Privacy is violated when information flows into the wrong [context|setting|place].",
         "Parents sharing their children's photos and stories online is called [sharenting].",
         "The right to ask search engines to remove outdated links is the right to be [forgotten]."
       ]

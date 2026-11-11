@@ -91,7 +91,7 @@ Footprints can also be **positive**: a portfolio of your art, a coding project, 
       cats: ["Likely helps", "Could hurt"],
       items: [
         ["A school news story about Alex's robotics award", 0], ["A coding project Alex shared publicly", 0], ["A volunteer list from the animal shelter", 0], ["Videos of Alex's guitar covers", 0],
-        ["An old post calling teachers \"clueless\"", 1], ["A rude argument with a stranger in a comment thread", 1], ["A cruel joke Alex sent to a \"private\" group chat that got screenshotted", 1], ["A public fitness map showing Alex's house as the start of every run", 1]
+        ["An old post calling teachers \"clueless\"", 1], ["A rude argument with a stranger in a comment thread", 1], ["A cruel joke Alex sent to a \"private\" group chat that got screenshotted", 1], ["A video Alex posted making fun of a younger student", 1]
       ]
     },
     {
@@ -110,8 +110,9 @@ Footprints can also be **positive**: a portfolio of your art, a coding project, 
         "Computers store everything as 1s and 0s, called [binary].",
         "Data you share on purpose is your [active] footprint.",
         "Data collected without you actively sharing it is your [passive] footprint.",
-        "Strava's heatmap revealed military bases by combining many people's [location|GPS] data."
-      ]
+        "Strava's heatmap revealed military bases by combining many soldiers' [location|GPS|route|routes|running|run|fitness|passive|movement|tracking|location history] data."
+      ],
+      hints: ["Think about what a phone or fitness tracker records while you go for a run."]
     },
     {
       id: "s1", type: "selfcheck", title: "My footprint check",
