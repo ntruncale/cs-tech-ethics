@@ -50,7 +50,7 @@ If the world's biggest celebrities could be hacked by a phone call, protecting y
       title: "Encryption: scrambling data",
       text: `**Encryption** scrambles data so only someone with the right **key** can read it.
 
-One of the oldest ciphers is the **Caesar cipher**: shift every letter by a set number. With a shift of 3, A becomes D, B becomes E, and HELLO becomes **KHOOR**. It's easy to break: there are only 25 possible shifts, so a computer (or a patient person) can try them all.
+One of the oldest ciphers is the **Caesar cipher**: shift every letter by a set number. With a shift of 3, A becomes D, B becomes E, and HELLO becomes **KHOOR**. It's easy to break. The alphabet has 26 letters, but a shift of 26 brings every letter back to where it started, so there are only **25** shifts that actually scramble a message. A computer (or a patient person) can try them all in seconds.
 
 Modern encryption uses keys so large that trying them all would take longer than the age of the universe. You use it every day:
 
@@ -107,9 +107,9 @@ Thank you,<br>IT Department`,
         "With a shift of 3, the letter D stands for [A].",
         "KHOOR decodes to [HELLO].",
         "SULYDFB decodes to [PRIVACY].",
-        "A Caesar cipher has only [25|twenty-five] possible shifts to try, so it's easy to break."
+        "The alphabet has 26 letters, but a shift of 26 gives back the original message. So a Caesar cipher has only [25|twenty-five|twenty five] shifts that actually scramble a message, which is why it's easy to break."
       ],
-      hints: ["Write the alphabet. For each letter in the code, count 3 letters back: K → H, H → E…"]
+      hints: ["Write the alphabet. For each letter in the code, count 3 letters back: K → H, H → E…", "For the last one: a shift of 26 lands every letter back where it started, so it doesn't count."]
     },
     {
       id: "t5", type: "quiz", title: "Password math",
