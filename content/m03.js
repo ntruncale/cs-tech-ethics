@@ -44,7 +44,14 @@ If the world's biggest celebrities could be hacked by a phone call, protecting y
 - Requests for your **password or a login code**. Real companies never ask for these.
 - Prizes or deals that are **too good to be true**
 
-**Never share a login code with anyone**, even someone who says they're from the company. That's exactly how social engineers get in.`
+**Never share a login code with anyone**, even someone who says they're from the company. That's exactly how social engineers get in.
+
+**If an account does get hacked**, work through four stages, in this order. Each one depends on the one before it.
+
+- **1. Get back in:** change the password, using a device you trust.
+- **2. Kick the hacker out:** sign out of every other device and session, so the hacker's login stops working.
+- **3. Lock the door:** fix the recovery email and phone if the hacker changed them, and turn on two-factor login, so they can't get back in.
+- **4. Clean up:** warn friends not to trust strange messages sent from your account. If anyone is threatening you, tell a trusted adult.`
     },
     {
       title: "Encryption: scrambling data",
@@ -121,9 +128,9 @@ Thank you,<br>IT Department`,
     },
     {
       id: "t6", type: "steps", title: "If your account is hacked",
-      intro: "Put these steps in a sensible order.",
-      items: ["Use a safe device to change your password", "Turn on two-factor login", "Log out all other devices and sessions", "Check that the recovery email and phone are still yours", "Warn friends not to trust messages that came from your account"],
-      hints: ["First lock the attacker out with a new password. Then make sure they can't get back in."]
+      intro: "Put the steps in order, using the four stages from Idea 2.",
+      items: ["Change your password, using a device you trust", "Sign out of every other device and session", "Fix the recovery email and phone, and turn on two-factor login", "Warn friends not to trust strange messages from your account"],
+      hints: ["The four stages: get back in → kick the hacker out → lock the door → clean up."]
     },
     {
       id: "s1", type: "selfcheck", title: "Security check",
@@ -164,7 +171,7 @@ Thank you,<br>IT Department`,
     snags: [
       ["Task 4", "Shifts forward instead of back", "The message was made by shifting forward. To undo it, which way do you go?"],
       ["Task 5", "Picks Tr0ub!e as strongest", "Count the characters. Which one would take a computer longer to guess every possibility of?"],
-      ["Task 6", "Turns on two-factor before changing the password", "If the attacker still knows your password, could they turn two-factor off again?"],
+      ["Task 6", "Puts two-factor before signing out other devices", "If the hacker is still logged in on their own device, are they out yet? Get back in, kick them out, then lock the door."],
       ["Self-check", "Asks you to check their passwords", "Never ask for or look at a student's passwords. Point them to the steps in the module."]
     ],
     factcheck: "Twitter hack July 15, 2020: 130 accounts targeted, 45 tweeted from; phone spear-phishing of employees (Twitter blog, July 2020; NY DFS report, Oct 2020). Graham Ivan Clark, 17, Tampa; pleaded guilty March 2021; 3 years juvenile facility + 3 years probation. Scam proceeds reported at about $117,000–$120,000 in Bitcoin. Math: 26^8 = 208,827,064,576; 26^12 ≈ 9.54 × 10^16; 7,776^4 ≈ 3.66 × 10^15 (Diceware list = 7,776 words). Caesar cipher: 25 non-trivial shifts."
