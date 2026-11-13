@@ -1301,6 +1301,15 @@
     }
     function section(id) { return el("section", { "class": "step", id: id }); }
 
+    // A diagram for a Learn idea: inline SVG (so it follows the light/dark theme) plus a caption.
+    function figure(f) {
+      var fig = el("figure", { "class": "fig" });
+      var wrap = el("div", { "class": "fig-art", role: "img", "aria-label": f.alt || "" });
+      wrap.innerHTML = f.svg;
+      fig.appendChild(wrap);
+      if (f.caption) fig.appendChild(html("figcaption", null, inline(f.caption)));
+      return fig;
+    }
     function page() {
       var app = $("app");
       app.innerHTML = "";
@@ -1367,6 +1376,7 @@
         var box = el("div", { "class": "idea" });
         box.appendChild(html("h3", null, (M.learn.length > 1 ? "Idea " + (i + 1) + ": " : "") + inline(idea.title)));
         if (idea.text) box.appendChild(html("div", { "class": "prose" }, rich(idea.text)));
+        if (idea.figure) box.appendChild(figure(idea.figure));
         if (idea.conj) { var cw = el("div", { "class": "conj-wrap" }); idea.conj.forEach(function (v) { cw.appendChild(conjTable(v)); }); box.appendChild(cw); }
         if (idea.table) box.appendChild(table(idea.table));
         if (idea.examples) box.appendChild(examples(idea.examples));

@@ -390,3 +390,27 @@ blockquote { margin: 0; padding: 10px 16px; border-left: 4px solid var(--gold); 
 .lockrow { display: flex; flex-wrap: wrap; gap: 8px; }
 .lockrow input { flex: 1 1 12rem; max-width: 20rem; text-transform: uppercase; letter-spacing: 0.06em; }
 .lockback { font-size: var(--step-0); }
+/* Diagrams in Learn ideas (figure in content/mNN.js). Inline SVG colored with the theme, so they work in dark mode too. */
+.fig { margin: 0; display: grid; gap: 8px; justify-items: center; }
+.fig-art { width: 100%; max-width: 560px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.fig-art svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig figcaption { font-size: var(--step-0); color: var(--muted); max-width: 560px; text-align: center; }
+.fig text { font-family: var(--font-body); fill: var(--ink); font-size: 14px; }
+.fig text.sm { font-size: 12px; fill: var(--muted); }
+.fig text.b { font-weight: 700; }
+.fig text.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-weight: 700; }
+.fig text.on { fill: var(--on-accent); }
+.fig text.okt { fill: var(--ok); font-weight: 700; }
+.fig text.badt { fill: var(--bad); font-weight: 700; }
+.fig .accent { fill: var(--accent); }
+.fig .soft { fill: var(--surface-2); }
+.fig .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.fig .okbox { fill: var(--ok-soft); stroke: var(--ok); stroke-width: 1.5; }
+.fig .badbox { fill: var(--bad-soft); stroke: var(--bad); stroke-width: 1.5; }
+.fig .dash { fill: none; stroke: var(--bad); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.fig .grid { stroke: var(--line); stroke-width: 1; }
+.fig .arrow { stroke: var(--muted); stroke-width: 2; fill: none; }
+.fig .arrow.hl { stroke: var(--accent); }
+.fig .head { fill: var(--muted); }
+.fig .head.hl { fill: var(--accent); }
+@media (max-width: 480px) { .fig-art { padding: 8px; border-radius: 10px; } }
