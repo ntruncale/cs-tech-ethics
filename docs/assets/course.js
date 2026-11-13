@@ -1075,8 +1075,9 @@
     function taskSteps(t, host, optional) {
       var s = shell(t, host, optional);
       var seq = bag(t.id, { seq: [] });
-      if (!seq.seq) seq.seq = [];
       var n = t.items.length;
+      // Keep only saved picks that still exist (the activity may have changed since they were saved).
+      seq.seq = (seq.seq || []).filter(function (i, k, a) { return typeof i === "number" && i >= 0 && i < n && a.indexOf(i) === k; });
       var order = shuffled("st:" + t.id, n);
       var wrap = el("div", { "class": "stepzones" });
       var bankBox = el("div"), seqBox = el("div");
@@ -1301,11 +1302,49 @@
     }
     function section(id) { return el("section", { "class": "step", id: id }); }
 
+    /* ---------- saved work that no longer matches an activity ---------- */
+    // Clear everything saved for one activity: answers, hints, done mark and its shuffled orders.
+    function forgetTask(id) {
+      delete state.extra[id]; delete state.done[id]; delete state.hints[id];
+      var v = state.extra.vary || {};
+      Object.keys(v).forEach(function (k) { if (k.split(":").indexOf(id) !== -1) delete v[k]; });
+    }
+    // Each activity's content fingerprint is saved with the work. If the activity was edited since, its old answers are cleared.
+    function checkFingerprints() {
+      var sigs = state.extra.sigs || (state.extra.sigs = {});
+      M.tasks.concat(M.further && M.further.type ? [M.further] : []).forEach(function (t) {
+        var sig = Text.hash(JSON.stringify(t));
+        if (sigs[t.id] && sigs[t.id] !== sig) forgetTask(t.id);
+        sigs[t.id] = sig;
+      });
+      save();
+    }
+    // Draw one activity. If old saved work breaks it, reset that activity and draw it fresh instead of stopping the page.
+    function renderTask(t, host, optional) {
+      var mark = host.lastChild;
+      try { RENDER[t.type](t, host, optional); return; } catch (e) {
+        if (window.console) console.warn("Activity " + t.id + " couldn't load its saved work, so it was reset.", e);
+      }
+      while (host.lastChild && host.lastChild !== mark) host.removeChild(host.lastChild);
+      forgetTask(t.id); save();
+      try { RENDER[t.type](t, host, optional); } catch (e2) {
+        while (host.lastChild && host.lastChild !== mark) host.removeChild(host.lastChild);
+        host.appendChild(html("div", { "class": "task" }, "<p>This activity couldn't load. Please tell your teacher.</p>"));
+      }
+    }
+
     // A diagram for a Learn idea: inline SVG (so it follows the light/dark theme) plus a caption.
     function figure(f) {
       var fig = el("figure", { "class": "fig" });
       var wrap = el("div", { "class": "fig-art", role: "img", "aria-label": f.alt || "" });
       wrap.innerHTML = f.svg;
+      // Give the drawing a fixed shape from its viewBox. Safari can size an inline SVG with only height:auto wrongly.
+      var svg = wrap.querySelector("svg"), vb = svg && (svg.getAttribute("viewBox") || "").split(/[\s,]+/).map(Number);
+      if (vb && vb.length === 4 && vb[2] > 0 && vb[3] > 0) {
+        svg.setAttribute("width", vb[2]); svg.setAttribute("height", vb[3]);
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+        svg.style.aspectRatio = vb[2] + " / " + vb[3];
+      }
       fig.appendChild(wrap);
       if (f.caption) fig.appendChild(html("figcaption", null, inline(f.caption)));
       return fig;
@@ -1391,7 +1430,7 @@
       var s3 = section("try");
       s3.appendChild(stepHead(3, "Practice", "Experience"));
       s3.appendChild(html("p", { "class": "goal" }, "Every activity checks itself. Pink means try again. Stuck? Tap <b>Show a hint</b>."));
-      M.tasks.forEach(function (t) { RENDER[t.type](t, s3, !!t.optional || t.type === "speak" || t.type === "selfcheck"); });
+      M.tasks.forEach(function (t) { renderTask(t, s3, !!t.optional || t.type === "speak" || t.type === "selfcheck"); });
       main.appendChild(s3);
 
       /* 4 build */
@@ -1446,7 +1485,7 @@
       s7.appendChild(stepHead(7, "Go further", "Optional"));
       if (M.further) {
         if (M.further.note) s7.appendChild(html("div", { "class": "prose" }, rich(M.further.note)));
-        if (M.further.type) RENDER[M.further.type](M.further, s7, true);
+        if (M.further.type) renderTask(M.further, s7, true);
       }
       if (M.culture) s7.appendChild(html("div", { "class": "note-es" }, rich(M.culture)));
       main.appendChild(s7);
@@ -1522,6 +1561,7 @@
         if (saved && typeof saved === "object") state = Object.assign(state, saved);
       } catch (e) {}
       state.extra = state.extra || {}; state.done = state.done || {}; state.hints = state.hints || {};
+      checkFingerprints();
       page();
       refresh();
       if (location.hash) { var target = document.getElementById(location.hash.slice(1)); if (target) target.scrollIntoView(); }

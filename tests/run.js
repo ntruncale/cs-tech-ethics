@@ -2,6 +2,7 @@
 /* Browser test for every module: works through each activity using the module's own answers,
    tries a wrong answer and an accent-mark slip, checks the completion code unlocks and survives a reload,
    that a locked module refuses a wrong unlock code and opens with the right one (and the index unlock box works),
+   that old saved work from an earlier version of a module never stops the page from drawing,
    that every play button has an audio file, that there are no script errors, and that the page
    doesn't scroll sideways on a phone. Screenshots go to tests/.shots/.
 
@@ -240,6 +241,45 @@ async function solveTask(p, t, vary, log) {
     if (log.length) { failures++; console.log(`FAIL ${key} ${m.slug}\n  - ` + log.join("\n  - ")); }
     else console.log(`PASS ${key} ${m.slug} (${code})`);
   }
+  // Old saved work: progress saved by an earlier version of a module (answers to activities that have since changed,
+  // or picks that no longer exist) must never stop the page from drawing.
+  for (const [mi, m] of course.modules.entries()) {
+    if (only.length && !only.includes(m.num)) continue;
+    const key = "m" + String(m.num).padStart(2, "0");
+    for (const withSigs of [false, true]) {
+      const tasks = m.tasks.concat(m.further && m.further.type ? [Object.assign({ id: "x1" }, m.further)] : []);
+      const extra = { vary: {} }, done = {};
+      tasks.forEach((t) => {
+        extra[t.id] = { seq: [99, 0, 0, -1], picked: [99], v: { 99: 1 } };
+        ["st", "so", "ml", "mr", "order", "pick"].forEach((k) => { extra.vary[k + ":" + t.id] = [99, 98, 1]; });
+        done[t.id] = true;
+      });
+      if (withSigs) extra.sigs = Object.fromEntries(tasks.map((t) => [t.id, "stale"]));
+      const saved = JSON.stringify({ done, hints: {}, extra });
+      const unlock = course.checks[key] && course.checks[key].unlock;
+      const ctx = await b.newContext({ viewport: { width: 820, height: 1180 } });
+      await ctx.addInitScript(([k, v, n, u]) => {
+        if (sessionStorage.getItem("seeded")) return;
+        sessionStorage.setItem("seeded", "1");
+        localStorage.setItem(k, v);
+        if (u) localStorage.setItem("techethics9:unlock:m" + n, u);
+      }, ["techethics9:m" + m.num, saved, m.num, unlock ? unlock.toUpperCase().replace(/[^A-Z0-9]/g, "") : ""]);
+      const p = await ctx.newPage();
+      const errs = [];
+      p.on("pageerror", (e) => errs.push(e.message));
+      await p.route("https://fonts.**", (r) => r.abort());
+      await p.goto("file://" + path.join(ROOT, "docs", course.pages[mi]));
+      const log = [];
+      await p.waitForSelector("#check-card", { timeout: 15000 }).catch(() => log.push("page stopped drawing before the Check step"));
+      for (const t of m.tasks) if (!(await p.locator("#task-" + t.id).count())) log.push(`activity ${t.id} missing`);
+      if (errs.length) log.push("script errors: " + errs.join(" | "));
+      await ctx.close();
+      const label = `${key} with old saved work${withSigs ? " (edited activities)" : ""}`;
+      if (log.length) { failures++; console.log(`FAIL ${label}\n  - ` + log.join("\n  - ")); }
+      else console.log(`PASS ${label}`);
+    }
+  }
+
   // Index page: every locked module shows a lock; a wrong code is refused; a right code unlocks only its module.
   if (!only.length) {
     const log = [];
