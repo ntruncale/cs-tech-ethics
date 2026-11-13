@@ -414,3 +414,12 @@ blockquote { margin: 0; padding: 10px 16px; border-left: 4px solid var(--gold); 
 .fig .head { fill: var(--muted); }
 .fig .head.hl { fill: var(--accent); }
 @media (max-width: 480px) { .fig-art { padding: 8px; border-radius: 10px; } }
+.fig text.md { font-size: 13px; }
+.fig .accentsoft { fill: var(--accent-soft); stroke: var(--line); stroke-width: 1.5; }
+.fig .dashbox { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.fig .line { stroke: var(--line); stroke-width: 2; fill: none; }
+.fig .dline { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+.fig .beam { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.fig .okline { stroke: var(--ok); stroke-width: 2.5; }
+.fig .badline { stroke: var(--bad); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.fig circle.muted { fill: var(--muted); }

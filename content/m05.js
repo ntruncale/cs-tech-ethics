@@ -19,6 +19,11 @@ A law written in 1791, long before electricity, now protects the phone in your p
   learn: [
     {
       title: "The Constitution and your phone",
+      figure: {
+        alt: "Timeline: 1791, the Fourth Amendment bans unreasonable searches. 2014, Riley v. California: police need a warrant to search a phone. 2018, Carpenter v. United States: police need a warrant for location records.",
+        caption: "A rule written in **1791** now protects the phone in your pocket.",
+        svg: "<svg viewBox=\"0 0 520 126\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><line class=\"line\" x1=\"10\" y1=\"62\" x2=\"510\" y2=\"62\"/><rect x=\"167\" y=\"54\" width=\"28\" height=\"16\" style=\"fill:var(--surface)\"/><text class=\"b\" x=\"181\" y=\"67\" text-anchor=\"middle\">…</text><text class=\"sm\" x=\"181\" y=\"44\" text-anchor=\"middle\">223 years later</text><circle class=\"accent\" cx=\"92\" cy=\"62\" r=\"8\"/><text class=\"b\" x=\"92\" y=\"30\" text-anchor=\"middle\" style=\"font-size:16px\">1791</text><text class=\"b\" x=\"92\" y=\"92\" text-anchor=\"middle\" style=\"font-size:13px\">Fourth Amendment</text><text class=\"sm\" x=\"92\" y=\"110\" text-anchor=\"middle\">no unreasonable searches</text><circle class=\"accent\" cx=\"270\" cy=\"62\" r=\"8\"/><text class=\"b\" x=\"270\" y=\"30\" text-anchor=\"middle\" style=\"font-size:16px\">2014</text><text class=\"b\" x=\"270\" y=\"92\" text-anchor=\"middle\" style=\"font-size:13px\">Riley v. California</text><text class=\"sm\" x=\"270\" y=\"110\" text-anchor=\"middle\">phones: get a warrant</text><circle class=\"accent\" cx=\"436\" cy=\"62\" r=\"8\"/><text class=\"b\" x=\"436\" y=\"30\" text-anchor=\"middle\" style=\"font-size:16px\">2018</text><text class=\"b\" x=\"436\" y=\"92\" text-anchor=\"middle\" style=\"font-size:13px\">Carpenter v. U.S.</text><text class=\"sm\" x=\"436\" y=\"110\" text-anchor=\"middle\">location: get a warrant</text></svg>"
+      },
       text: `The **Fourth Amendment** says the government can't do "unreasonable searches and seizures." Usually that means police need a **warrant**: permission from a judge, based on evidence.
 
 - **Riley v. California (2014):** police generally need a warrant to search your phone.
@@ -28,6 +33,11 @@ The Fourth Amendment limits the **government**. It doesn't stop **companies** fr
     },
     {
       title: "U.S. privacy laws: a patchwork",
+      figure: {
+        alt: "Patchwork diagram: separate laws cover school records (FERPA), health records at doctors (HIPAA), kids under 13 online (COPPA), face scans in Illinois (BIPA) and California residents' data (CCPA). One patch is a gap: there is no overall federal privacy law.",
+        caption: "U.S. privacy law is a **patchwork**: each law covers one kind of data, with gaps in between.",
+        svg: "<svg viewBox=\"0 0 520 164\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><rect class=\"soft\" x=\"0\" y=\"2\" width=\"166\" height=\"72\" rx=\"8\"/><text class=\"b\" x=\"83\" y=\"35\" text-anchor=\"middle\">FERPA</text><text class=\"sm\" x=\"83\" y=\"52\" text-anchor=\"middle\">school records</text><rect class=\"soft\" x=\"177\" y=\"2\" width=\"166\" height=\"72\" rx=\"8\"/><text class=\"b\" x=\"260\" y=\"35\" text-anchor=\"middle\">HIPAA</text><text class=\"sm\" x=\"260\" y=\"52\" text-anchor=\"middle\">health records at doctors</text><rect class=\"soft\" x=\"354\" y=\"2\" width=\"166\" height=\"72\" rx=\"8\"/><text class=\"b\" x=\"437\" y=\"35\" text-anchor=\"middle\">COPPA</text><text class=\"sm\" x=\"437\" y=\"52\" text-anchor=\"middle\">kids under 13 online</text><rect class=\"soft\" x=\"0\" y=\"84\" width=\"166\" height=\"72\" rx=\"8\"/><text class=\"b\" x=\"83\" y=\"117\" text-anchor=\"middle\">BIPA (Illinois)</text><text class=\"sm\" x=\"83\" y=\"134\" text-anchor=\"middle\">face scans, fingerprints</text><rect class=\"soft\" x=\"177\" y=\"84\" width=\"166\" height=\"72\" rx=\"8\"/><text class=\"b\" x=\"260\" y=\"117\" text-anchor=\"middle\">CCPA (California)</text><text class=\"sm\" x=\"260\" y=\"134\" text-anchor=\"middle\">know and delete your data</text><rect class=\"dashbox\" x=\"354\" y=\"84\" width=\"166\" height=\"72\" rx=\"8\"/><text class=\"badt\" x=\"437\" y=\"116\" text-anchor=\"middle\" style=\"font-size:13px\">A gap: no overall</text><text class=\"badt\" x=\"437\" y=\"134\" text-anchor=\"middle\" style=\"font-size:13px\">federal privacy law</text></svg>"
+      },
       text: `The U.S. doesn't have one big privacy law. Instead it has laws for **specific kinds** of data:`,
       table: {
         head: ["Law", "What it protects"],
@@ -42,6 +52,11 @@ The Fourth Amendment limits the **government**. It doesn't stop **companies** fr
     },
     {
       title: "Around the world, and the big trade-off",
+      figure: {
+        alt: "Balance scale: safety on one side (solve crimes faster, find missing people) and privacy on the other (not being tracked, freedom to be yourself).",
+        caption: "Many tech decisions weigh **safety** against **privacy**. The question is who decides, and what limits keep that power in check.",
+        svg: "<svg viewBox=\"0 0 520 196\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><line class=\"beam\" x1=\"260\" y1=\"46\" x2=\"260\" y2=\"168\"/><rect class=\"accent\" x=\"206\" y=\"168\" width=\"108\" height=\"10\" rx=\"3\"/><path class=\"accent\" d=\"M252 46 L268 46 L260 34 Z\"/><line class=\"beam\" x1=\"100\" y1=\"46\" x2=\"420\" y2=\"46\"/><line class=\"line\" x1=\"100\" y1=\"46\" x2=\"40\" y2=\"96\"/><line class=\"line\" x1=\"100\" y1=\"46\" x2=\"160\" y2=\"96\"/><path class=\"accentsoft\" d=\"M28 96 Q100 124 172 96 Z\"/><text class=\"b\" x=\"100\" y=\"22\" text-anchor=\"middle\" style=\"font-size:16px\">Safety</text><text class=\"md\" x=\"100\" y=\"148\" text-anchor=\"middle\">solve crimes faster</text><text class=\"md\" x=\"100\" y=\"166\" text-anchor=\"middle\">find missing people</text><line class=\"line\" x1=\"420\" y1=\"46\" x2=\"360\" y2=\"96\"/><line class=\"line\" x1=\"420\" y1=\"46\" x2=\"480\" y2=\"96\"/><path class=\"accentsoft\" d=\"M348 96 Q420 124 492 96 Z\"/><text class=\"b\" x=\"420\" y=\"22\" text-anchor=\"middle\" style=\"font-size:16px\">Privacy</text><text class=\"md\" x=\"420\" y=\"148\" text-anchor=\"middle\">not being tracked</text><text class=\"md\" x=\"420\" y=\"166\" text-anchor=\"middle\">freedom to be yourself</text></svg>"
+      },
       text: `In 2018 the European Union's **General Data Protection Regulation (GDPR)** took effect. It treats data protection as a **basic right** and covers almost all personal data. People in the EU can **see** the data companies have about them, **correct** it, and ask for it to be **deleted**. Companies that break the rules can be fined up to **4% of their worldwide yearly revenue**.
 
 Societies also argue about **safety versus privacy**:
